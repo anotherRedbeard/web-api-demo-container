@@ -57,4 +57,5 @@ jobs:
           inlineScript: |
             az config set extension.use_dynamic_install=yes_without_prompt
             az containerapp registry set -n red-scus-demo-aca -g red-scus-fun-with-containers-rg --server redscusmyrepoacr.azurecr.io --username  ${{ secrets.REDSCUSDEMOACA_REGISTRY_USERNAME }} --password ${{ secrets.REDSCUSDEMOACA_REGISTRY_PASSWORD }}
-            az containerapp update -n red-scus-demo-aca -g red-scus-fun-with-containers-rg --image redscusmyrepoacr.azurecr.io/my-cool-api:${{ github.sha }}
+            #az containerapp update -n red-scus-demo-aca -g red-scus-fun-with-containers-rg --image redscusmyrepoacr.azurecr.io/my-cool-api:${{ github.sha }}
+            az containerapp update -n red-scus-demo-aca -g red-scus-fun-with-containers-rg --image redscusmyrepoacr.azurecr.io/my-cool-api:v1
