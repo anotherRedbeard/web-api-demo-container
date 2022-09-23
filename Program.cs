@@ -26,7 +26,7 @@ app.UseHttpsRedirection();
 
 //policy.WithOrigins("https://localhost:7270","http://localhost:5118","https://win-wire-app--8nfao0p.redgrass-633dc5ff.eastus.azurecontainerapps.io")
 app.UseCors(policy => policy
-    .WithOrigins("https://red-scus-blazorclient-aca.icymoss-1ea051d6.southcentralus.azurecontainerapps.io")
+    .WithOrigins("https://red-scus-blazorclient-aca.icymoss-1ea051d6.southcentralus.azurecontainerapps.io", "https://localhost:7139")
     .AllowAnyMethod()
     .WithHeaders(Microsoft.Net.Http.Headers.HeaderNames.ContentType)
 );
