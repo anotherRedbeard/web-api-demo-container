@@ -9,7 +9,8 @@ az acr login --name <registry_name>
 //push image to registry_name
 docker push <registry_url>/<image_name>:<version>
 
-//create new aca environmentaz containerapp env create \
+//create new aca environment
+az containerapp env create \
   --name $CONTAINERAPPS_ENVIRONMENT \
   --resource-group $RESOURCE_GROUP \
   --location $LOCATION
@@ -23,6 +24,7 @@ az containerapp create \
   --registry-server $REGISTRY_SERVER \
   --registry-username $REGISTRY_USERNAME \
   --registry-password $REGISTRY_PASSWORD
+  --secrets "queue-connection-string=$CONNECTION_STRING"
 
 //deploys the dockerfile in the . source folder into the ACA environment
 az containerapp up -n red-scus-demo-aca --environment dev -g red-scus-fun-with-containers-rg -l southcentralus --source .
