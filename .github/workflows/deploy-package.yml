@@ -15,7 +15,7 @@ on:
 
 env:
   VERSION: 'v1.0'
-  TAG: '$VERSION.${{ github.run_number }}'
+  TAG: '${VERSION}.${{ github.run_number }}'
 
 jobs:
   build:
