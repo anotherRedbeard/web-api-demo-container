@@ -26,6 +26,7 @@ app.UseHttpsRedirection();
 
 var corsAllowedHosts = builder.Configuration.GetSection("CorsAllowedHosts").GetChildren().Select(x => x.Value).ToArray();
 Console.WriteLine($"CorsAllowed:  {string.Join(",",corsAllowedHosts)}!");
+Console.WriteLine($"Test:  {builder.Configuration["Test"]}");
 
 //policy.WithOrigins("https://localhost:7270","http://localhost:5118","https://win-wire-app--8nfao0p.redgrass-633dc5ff.eastus.azurecontainerapps.io")
 app.UseCors(policy => policy
