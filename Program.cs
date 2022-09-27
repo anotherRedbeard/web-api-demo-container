@@ -24,7 +24,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var corsAllowedHosts = builder.Configuration.GetSection("CorsAllowedHosts").GetChildren().Select(x => x.Value).ToArray();
+var corsAllowedHosts = builder.Configuration["CorsAllowedHosts"].Split(',');
 Console.WriteLine($"CorsAllowed:  {string.Join(",",corsAllowedHosts)}!");
 Console.WriteLine($"Test:  {builder.Configuration["Test"]}");
 
