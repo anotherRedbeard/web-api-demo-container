@@ -14,7 +14,8 @@ on:
   workflow_dispatch:      
 
 env:
-  VERSION: v1.0
+  VERSION: 'v1.0'
+  TAG: '${{ env.VERSION }}.${{ github.run_number }}'
 
 jobs:
   build:
@@ -38,7 +39,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: redscusmyrepoacr.azurecr.io/my-cool-api:$VERSION.${{ github.run_id }}
+          tags: redscusmyrepoacr.azurecr.io/my-cool-api:${{env.TAG}}
           file: ./Dockerfile
           context: ./
 
@@ -60,5 +61,5 @@ jobs:
           inlineScript: |
             az config set extension.use_dynamic_install=yes_without_prompt
             az containerapp registry set -n red-scus-demo-aca -g red-scus-fun-with-containers-rg --server redscusmyrepoacr.azurecr.io --username  ${{ secrets.REDSCUSDEMOACA_REGISTRY_USERNAME }} --password ${{ secrets.REDSCUSDEMOACA_REGISTRY_PASSWORD }}
-            #az containerapp update -n red-scus-demo-aca -g red-scus-fun-with-containers-rg --image redscusmyrepoacr.azurecr.io/my-cool-api:$VERSION.${{ github.run_id }}
-            az containerapp update -n red-scus-demo-aca -g red-scus-fun-with-containers-rg --image redscusmyrepoacr.azurecr.io/my-cool-api:$VERSION.${{ github.run_id }} --replace-env-vars AllowedHosts=['https://red-scus-blazorclient-aca.icymoss-1ea051d6.southcentralus.azurecontainerapps.io','https://localhost:7139']
+            #az containerapp update -n red-scus-demo-aca -g red-scus-fun-with-containers-rg --image redscusmyrepoacr.azurecr.io/my-cool-api:${{env.TAG}}
+            az containerapp update -n red-scus-demo-aca -g red-scus-fun-with-containers-rg --image redscusmyrepoacr.azurecr.io/my-cool-api:${{env.TAG}} --replace-env-vars AllowedHosts=['https://red-scus-blazorclient-aca.icymoss-1ea051d6.southcentralus.azurecontainerapps.io','https://localhost:7139']
