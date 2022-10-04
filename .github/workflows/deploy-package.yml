@@ -27,7 +27,7 @@ env:
 
 jobs:
   build-infra:
-    uses: anotherRedbeard/reusable-workflows/.github/workflows/create_aca-infra.yml@main
+    uses: anotherRedbeard/reusable-workflows/.github/workflows/create-aca-infra.yml@main
     with:
       rg-name: ${{ env.resource-group-name }}
       location: ${{ env.location }}
