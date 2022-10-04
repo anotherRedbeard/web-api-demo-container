@@ -29,12 +29,12 @@ jobs:
   build-infra:
     uses: anotherRedbeard/reusable-workflows/.github/workflows/create-aca-infra.yml@main
     with:
-      rg-name: ${{ env.resource-group-name }}
-      location: ${{ env.location }}
-      law-name: ${{ env.log-analytics-workspace-name }}
-      aca-env-name: ${{ env.aca-env-name }}
-      reg-name: ${{ env.registry-name }}
-      reg-sku: ${{ env.registry-sku }}
+      rg-name: 'red-scus-test-rg'
+      location: 'southcentralus'
+      law-name: 'redscusworkspace00111'
+      aca-env-name: 'dev-env'
+      reg-name: 'redscuscontainerreg000111'
+      reg-sku: 'Standard'
     secrets:
       azure-creds: ${{ secrets.REDSCUSDEMOACA_AZURE_CREDENTIALS }}
 
