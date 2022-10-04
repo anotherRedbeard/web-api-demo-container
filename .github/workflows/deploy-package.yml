@@ -46,6 +46,11 @@ jobs:
       - name: Checkout to the branch
         uses: actions/checkout@v2
 
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.REDSCUSDEMOACA_AZURE_CREDENTIALS }}
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
