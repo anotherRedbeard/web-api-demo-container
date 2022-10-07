@@ -29,14 +29,14 @@ jobs:
   build-infra:
     uses: anotherRedbeard/reusable-workflows/.github/workflows/create-aca-infra.yml@main
     with:
-      rg-name: 'red-scus-test-rg'
+      rg-name: ${{ env.resource-group-name }}
       location: 'southcentralus'
       law-name: 'redscusworkspace00111'
       aca-env-name: 'dev-env'
       reg-name: 'redscuscontainerreg000111'
       reg-sku: 'Standard'
     secrets:
-      azure-creds: ${{ secrets.REDSCUSDEMOACA_AZURE_CREDENTIALS }}
+      azure-creds: ${{ secrets.AZURE_CREDENTIALS }}
 
   build:
     runs-on: ubuntu-latest
@@ -49,7 +49,7 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.REDSCUSDEMOACA_AZURE_CREDENTIALS }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -79,6 +79,13 @@ jobs:
           file: ./Dockerfile
           context: ./
 
+      - name: Azure CLI script
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az logout
+            az cache purge
+            az account clear
 
   deploy:
     runs-on: ubuntu-latest
@@ -88,7 +95,7 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.REDSCUSDEMOACA_AZURE_CREDENTIALS }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Get Container Registry Credentials
         uses: azure/CLI@v1
@@ -112,5 +119,11 @@ jobs:
               --registry-password ${{ env.ACR_PASSWORD }} \
               --ingress external --target-port 5209 \
               --env-vars CorsAllowedHosts=${{ env.cors-allowed-url }}
-            #az containerapp update -n red-scus-demo-aca -g red-scus-fun-with-containers-rg --image redscusmyrepoacr.azurecr.io/my-cool-api:${{ env.VERSION }}.${{ github.run_number }}
-            #az containerapp update -n red-scus-demo-aca -g red-scus-fun-with-containers-rg --image redscusmyrepoacr.azurecr.io/my-cool-api:${{ env.VERSION }}.${{ github.run_number }} --replace-env-vars CorsAllowedHosts=${{ env.cors-allowed-url }}
+
+      - name: Azure CLI script
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az logout
+            az cache purge
+            az account clear
