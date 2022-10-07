@@ -110,7 +110,7 @@ jobs:
               --environment ${{ env.aca-env-name }} --registry-server ${{ env.registry-name }}.azurecr.io \
               --registry-username ${{ env.ACR_USERNAME }} \
               --registry-password ${{ env.ACR_PASSWORD }} \
-              --ingress external --target-port 5209 \
+              --ingress external --target-port 5209 \ 
               --env-vars CorsAllowedHosts=${{ env.cors-allowed-url }}
             #az containerapp update -n red-scus-demo-aca -g red-scus-fun-with-containers-rg --image redscusmyrepoacr.azurecr.io/my-cool-api:${{ env.VERSION }}.${{ github.run_number }}
             #az containerapp update -n red-scus-demo-aca -g red-scus-fun-with-containers-rg --image redscusmyrepoacr.azurecr.io/my-cool-api:${{ env.VERSION }}.${{ github.run_number }} --replace-env-vars CorsAllowedHosts=${{ env.cors-allowed-url }}
