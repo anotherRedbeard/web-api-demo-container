@@ -26,10 +26,12 @@ env:
   cors-allowed-url: 'https://todo-blazorclient-aca.greenstone-2af09d55.southcentralus.azurecontainerapps.io/'
 
 jobs:
-  print:
+  expose-env:
     runs-on: ubuntu-latest
+
     outputs:
       rg-name: ${{ steps.step1.outputs.rg-name }}
+      
     steps:
       - name: Print inputs passed to the reusable workflow
         id: step1
@@ -37,11 +39,11 @@ jobs:
           echo "::set-output name=rg-name::$resource-group-name"
 
   build-infra:
-    needs: print
+    needs: expose-env
 
     uses: anotherRedbeard/reusable-workflows/.github/workflows/create-aca-infra.yml@main
     with:
-      rg-name: ${{ print.outputs.rg-name }}
+      rg-name: ${{ expose-env.outputs.rg-name }}
       location: 'southcentralus'
       law-name: 'redscusworkspace00111'
       aca-env-name: 'dev-env'
