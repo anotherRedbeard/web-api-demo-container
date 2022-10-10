@@ -36,7 +36,7 @@ jobs:
       - name: Print inputs passed to the reusable workflow
         id: step1
         run: |
-          echo "::set-output name=rg-name::$resource-group-name"
+          echo "::set-output name=rg-name::${{ env.resource-group-name }}"
 
   build-infra:
     needs: expose-env
