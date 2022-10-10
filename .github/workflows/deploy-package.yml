@@ -30,13 +30,23 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      rg-name: ${{ steps.step1.outputs.rg-name }}
+      rg-name: ${{ steps.print-var.outputs.rg-name }}
+      location-name: ${{ steps.print-var.outputs.location-name }}
+      law-name: ${{ steps.print-var.outputs.law-name }}
+      aca-env-name: ${{ steps.print-var.outputs.aca-env-name }}
+      reg-name: ${{ steps.print-var.outputs.reg-name }}
+      reg-sku: ${{ steps.print-var.outputs.reg-sku }}
       
     steps:
       - name: Print inputs passed to the reusable workflow
-        id: step1
+        id: print-var
         run: |
           echo "::set-output name=rg-name::${{ env.resource-group-name }}"
+          echo "::set-output name=location-name::${{ env.location }}"
+          echo "::set-output name=law-name::${{ env.log-analytics-workspace-name }}"
+          echo "::set-output name=aca-env-name::${{ env.aca-env-name }}"
+          echo "::set-output name=reg-name::${{ env.registry-name }}"
+          echo "::set-output name=reg-sku::${{ env.registry-sku }}"
 
   build-infra:
     needs: expose-env
@@ -44,11 +54,11 @@ jobs:
     uses: anotherRedbeard/reusable-workflows/.github/workflows/create-aca-infra.yml@main
     with:
       rg-name: ${{ needs.expose-env.outputs.rg-name }}
-      location: 'southcentralus'
-      law-name: 'redscusworkspace00111'
-      aca-env-name: 'dev-env'
-      reg-name: 'redscuscontainerreg000111'
-      reg-sku: 'Standard'
+      location: ${{ needs.expose-env.outputs.location-name }}
+      law-name: ${{ needs.expose-env.outputs.law-name }}
+      aca-env-name: ${{ needs.expose-env.outputs.aca-env-name }}
+      reg-name: ${{ needs.expose-env.outputs.reg-name }}
+      reg-sku: ${{ needs.expose-env.outputs.reg-sku }}
     secrets:
       azure-creds: ${{ secrets.AZURE_CREDENTIALS }}
 
