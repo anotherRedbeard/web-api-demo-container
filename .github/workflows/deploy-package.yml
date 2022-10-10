@@ -43,7 +43,7 @@ jobs:
 
     uses: anotherRedbeard/reusable-workflows/.github/workflows/create-aca-infra.yml@main
     with:
-      rg-name: ${{ expose-env.outputs.rg-name }}
+      rg-name: ${{ needs.expose-env.outputs.rg-name }}
       location: 'southcentralus'
       law-name: 'redscusworkspace00111'
       aca-env-name: 'dev-env'
