@@ -23,7 +23,7 @@ env:
   registry-sku: 'Standard'
   image-name: 'todo-webapi'
   container-name: 'todo-webapi-aca'
-  cors-allowed-url: 'https://todo-blazorclient-aca.greenstone-2af09d55.southcentralus.azurecontainerapps.io/'
+  cors-allowed-url: 'https://todo-blazorclient-aca.lemontree-689bf7fa.southcentralus.azurecontainerapps.io'
 
 jobs:
   expose-env:
