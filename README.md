@@ -10,7 +10,7 @@ This project was created initially by using the sample todo .Net web api from th
 
 ## Badges
 
-[![Trigger auto deployment for red-scus-demo-aca](https://github.com/anotherRedbeard/web-api-demo-container/actions/workflows/deploy-package.yml/badge.svg?branch=main)](https://github.com/anotherRedbeard/web-api-demo-container/actions/workflows/deploy-package.yml)
+[![Trigger auto deployment for Web API container demo](https://github.com/anotherRedbeard/web-api-demo-container/actions/workflows/deploy-package.yml/badge.svg?branch=main)](https://github.com/anotherRedbeard/web-api-demo-container/actions/workflows/deploy-package.yml)
 
 ## How to use
 
@@ -28,12 +28,12 @@ This is meant to be a repo that you can clone and use as you like.  The only thi
 ## Workflow
 
 The workflow has 4 separate stages: expose-env, build-infra, build, deploy
-    1. expose-env
-        - Unfortunately you need to expose the environment variables that you want to use as output variables so they can be passed into the shared workflow. Ideally it would be nice if you could just use the standard `env` variables
-    2. build-infra
-        - Uses a shared workflow that accepts the variables that were exposed as environment variables in the first stage to create the required infrastructure you need for Azure Container Apps.  These actions are idempotent so they can be run multiple times.
-        - The shared workflow is just an example of what you might want to do for your organization to keep things consistent.
-    3. build
-        - Builds the container and tags the image
-    4. deploy
-        - Uses the container image that was built and pushed to ACR and creates/updates that container app with that newly built image
+1. expose-env
+    - Unfortunately you need to expose the environment variables that you want to use as output variables so they can be passed into the shared workflow. Ideally it would be nice if you could just use the standard `env` variables
+2. build-infra
+    - Uses a shared workflow that accepts the variables that were exposed as environment variables in the first stage to create the required infrastructure you need for Azure Container Apps.  These actions are idempotent so they can be run multiple times.
+    - The shared workflow is just an example of what you might want to do for your organization to keep things consistent.
+3. build
+    - Builds the container and tags the image
+4. deploy
+    - Uses the container image that was built and pushed to ACR and creates/updates that container app with that newly built image
