@@ -12,6 +12,8 @@ This project was created initially by using the sample todo .Net web api from th
 
 [![Trigger auto deployment for Web API container demo](https://github.com/anotherRedbeard/web-api-demo-container/actions/workflows/deploy-package.yml/badge.svg?branch=main)](https://github.com/anotherRedbeard/web-api-demo-container/actions/workflows/deploy-package.yml)
 
+[![Trigger app service deployment](https://github.com/anotherRedbeard/web-api-demo-container/actions/workflows/deploy-app-service.yml/badge.svg)](https://github.com/anotherRedbeard/web-api-demo-container/actions/workflows/deploy-app-service.yml)
+
 ## How to use
 
 This is meant to be a repo that you can clone and use as you like.  The only thing you will need to change is the variables in the `deploy-package.yml` workflow.  They will be in the `env` section of the workflow.  There will need to change to match the resource names you would like to use in your Azure Subscription.
