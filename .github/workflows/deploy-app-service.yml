@@ -52,7 +52,7 @@ jobs:
           subscriptionId: ${{ secrets.AZURE_CREDENTIALS }}
           resourceGroupName: ${{ env.resource-group-name }}
           template: ./iac/main-deploy-app-service.bicep
-          parameters: 'app_service_postfix=${{ env.app-service-postfix }} app_service_sku=F1'
+          parameters: 'app_service_postfix=${{ env.app-service-postfix }} app_service_sku=S1'
           failOnStdErr: true
       
       - name: Azure CLI script
