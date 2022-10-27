@@ -41,7 +41,9 @@ jobs:
         with:
           inlineScript: |
             az group create -l ${{ env.location }} -n ${{ env.resource-group-name}}
-            az deployment group create --resource-group ${{ env.resource-group-name }} --template-file ./iac/main-deploy-app-service.bicep
+            az deployment group create --resource-group ${{ env.resource-group-name }} \
+             --template-file ./iac/main-deploy-app-service.bicep \
+             --parameters app_service_postfix=${{ env.app-service-postfix }} app_service_sku=F1
 
       # Deploy Bicep file
       - name: Deploy App Service bicep
@@ -50,7 +52,7 @@ jobs:
           subscriptionId: ${{ secrets.AZURE_CREDENTIALS }}
           resourceGroupName: ${{ env.resource-group-name }}
           template: ./iac/main-deploy-app-service.bicep
-          parameters: 'app_service_prefix=${{ env.app-service-postfix }}'
+          parameters: 'app_service_postfix=${{ env.app-service-postfix }} app_service_sku=F1'
           failOnStdErr: true
       
       - name: Azure CLI script
