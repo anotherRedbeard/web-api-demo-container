@@ -9,7 +9,7 @@ param location string = resourceGroup().location
 param app_service_postfix string 
 
 @allowed([
-  'F1'
+  'B1'
 ])
 @description('The name of the app service sku.')
 param app_service_sku string
