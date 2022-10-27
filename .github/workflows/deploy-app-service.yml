@@ -21,6 +21,7 @@ env:
   registry-rg-name: 'red-scus-test-rg'
   registry-name: 'redscuscontainerreg000111'
   image-name: 'todo-webapi'
+  main-app-service-deployment-name: 'main-deploy-app-service'
   #cors-allowed-url: 'https://todo-blazorclient-aca.lemontree-689bf7fa.southcentralus.azurecontainerapps.io'
 
 jobs:
@@ -75,7 +76,7 @@ jobs:
           inlineScript: |
             ACR_USERNAME=$(az acr credential show -n ${{ env.registry-name }} --query username --out tsv)
             ACR_PASSWORD=$(az acr credential show -n ${{ env.registry-name }} --query passwords[0].value --out tsv)
-            APP_NAME=$(az deployment group show --resource-group ${{ env.resource-group-name }} --name main  --query properties.outputs.connectionRuntimeUrl.value  --output tsv))
+            APP_NAME=$(az deployment group show -g red-scus-appsrvdemo-rg -n ${{ main-app-service-deployment-name }} --query properties.outputs.appServiceName.value  --output tsv)
             echo "::add-mask::$ACR_PASSWORD"
             echo ACR_USERNAME=$ACR_USERNAME >> $GITHUB_ENV
             echo ACR_PASSWORD=$ACR_PASSWORD >> $GITHUB_ENV
