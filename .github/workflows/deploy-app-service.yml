@@ -53,7 +53,7 @@ jobs:
           resourceGroupName: ${{ env.resource-group-name }}
           template: ./iac/main-deploy-app-service.bicep
           parameters: 'app_service_postfix=${{ env.app-service-postfix }} app_service_sku=B1'
-          failOnStdErr: true
+          failOnStdErr: false
       
       - name: Azure CLI script
         uses: azure/CLI@v1
