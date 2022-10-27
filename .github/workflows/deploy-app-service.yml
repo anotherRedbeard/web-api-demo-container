@@ -41,6 +41,7 @@ jobs:
         with:
           inlineScript: |
             az group create -l ${{ env.location }} -n ${{ env.resource-group-name}}
+            az deployment group create --resource-group ${{ env.resource-group-name }} --template-file ./iac/main-deploy-app-service.bicep
 
       # Deploy Bicep file
       - name: Deploy App Service bicep
