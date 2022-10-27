@@ -98,7 +98,7 @@ jobs:
 
       - uses: azure/webapps-deploy@v2
         with:
-          app-name: ${{ env.APP_NAME }
+          app-name: ${{ env.APP_NAME }}
           images: '${{ env.registry-name }}.azurecr.io/${{ env.image-name }}:${{ github.run_number }}'
 
       - name: Azure CLI script
