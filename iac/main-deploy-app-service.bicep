@@ -16,6 +16,15 @@ param app_service_sku string
 
 // =================================
 
+// Create Log Analytics workspace
+module logws './log-analytics-ws.bicep' = {
+  name: 'LogWorkspaceDeployment'
+  params: {
+    name: app_service_postfix
+    location: location
+  }
+}
+
 // Create app service
 module appService './app-service.bicep' = {
   name: 'AppServiceDeployment'
@@ -24,6 +33,7 @@ module appService './app-service.bicep' = {
     sku: app_service_sku
     linuxFxVersion: 'node|14-lts'
     location: location
+    logwsid: logws.outputs.id
   }
 }
 
