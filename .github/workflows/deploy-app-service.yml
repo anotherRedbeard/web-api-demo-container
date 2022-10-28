@@ -102,6 +102,14 @@ jobs:
         with:
           app-name: ${{ env.APP_NAME }}
           images: '${{ env.registry-name }}.azurecr.io/${{ env.image-name }}:latest'
+          app-settings-json: |
+            [
+             {
+                 "name": "CorsAllowedHosts",
+                 "value": "*",
+                 "slotSetting": false
+             }
+            ]
 
       - name: Azure CLI script
         uses: azure/CLI@v1
