@@ -42,7 +42,7 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
     serverFarmId: appServicePlan.id
     siteConfig: {
       linuxFxVersion: linuxFxVersion
-      appSettings: [
+      /*appSettings: [
         {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
           value: appi.properties.InstrumentationKey
@@ -55,7 +55,7 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
           name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
           value: appi.properties.ConnectionString
         }
-      ]
+      ]*/
     }
   }
 }

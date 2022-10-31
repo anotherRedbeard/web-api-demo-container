@@ -1,5 +1,9 @@
 //these are all the commands I used to get everything deployed
 
+//create log analytics workspace
+az monitor log-analytics workspace create --resource-group ${{ env.resource-group-name }} \
+  --workspace-name ${{ env.log-analytics-workspace-name }}
+
 //create acr
 az acr create -n <registry_name> -g <resource_group_name> --sku Standard
 
