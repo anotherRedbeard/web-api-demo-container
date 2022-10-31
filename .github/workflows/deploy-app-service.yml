@@ -102,13 +102,33 @@ jobs:
         with:
           app-name: ${{ env.APP_NAME }}
           images: '${{ env.registry-name }}.azurecr.io/${{ env.image-name }}:latest'
+
+      - name: Set Web App ACR authentication
+        uses: Azure/appservice-settings@v1
+        with:
+          app-name: ${{ env.APP_NAME }}
           app-settings-json: |
             [
-             {
-                 "name": "CorsAllowedHosts",
-                 "value": "*",
-                 "slotSetting": false
-             }
+                {
+                  "name": "DOCKER_REGISTRY_SERVER_PASSWORD",
+                  "value": "${{ env.ACR_PASSWORD }}",
+                  "slotSetting": false
+                },
+                {
+                  "name": "DOCKER_REGISTRY_SERVER_URL",
+                  "value": "${{ env.registry-name }}.azurecr.io",
+                  "slotSetting": false
+                },
+                {
+                  "name": "DOCKER_REGISTRY_SERVER_USERNAME",
+                  "value": "${{ env.ACR_USERNAME  }}",
+                  "slotSetting": false
+                },
+                {
+                  "name": "CorsAllowedHosts",
+                  "value": "*",
+                  "slotSetting": false
+                }
             ]
 
       - name: Azure CLI script
