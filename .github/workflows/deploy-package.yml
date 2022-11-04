@@ -1,4 +1,4 @@
-name: Trigger auto deployment for red-scus-demo-aca
+name: Trigger container apps deployment
 
 # When this action will be executed
 on:
