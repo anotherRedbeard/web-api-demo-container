@@ -25,7 +25,6 @@ env:
   container-name: 'todo-webapi-aca'
   client-container-name: 'todo-blazorclient-aca'
   client-container-rg-name: 'red-scus-test-rg'
-  #cors-allowed-url: 'https://todo-blazorclient-aca.lemontree-689bf7fa.southcentralus.azurecontainerapps.io'
 
 jobs:
   expose-env:
