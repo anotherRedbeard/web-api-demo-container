@@ -137,8 +137,8 @@ jobs:
         with:
           inlineScript: |
             az config set extension.use_dynamic_install=yes_without_prompt
-            CLIENT_CONTAINER_URL=$(az containerapp show -n ${{ env.client-container-name }} -g ${{ env.client-container-rg-name }} --query properties.configuration.ingress.fqdn --out tsv)
-            echo CLIENT_CONTAINER_URL=$CLIENT_CONTAINER_URL >> $GITHUB_ENV
+#            CLIENT_CONTAINER_URL=$(az containerapp show -n ${{ env.client-container-name }} -g ${{ env.client-container-rg-name }} --query properties.configuration.ingress.fqdn --out tsv)
+#            echo CLIENT_CONTAINER_URL=$CLIENT_CONTAINER_URL >> $GITHUB_ENV
 
       - name: Deploy to containerapp
         uses: azure/CLI@v1
