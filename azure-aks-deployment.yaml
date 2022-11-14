@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blazor-deployment
+spec:
+  selector:
+    matchLabels:
+      app: blazor
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: blazor
+    spec:
+      containers:
+      - name: blazor
+        image: redscuscontainerreg000111.azurecr.io/todo-blazorclient:v1.0.93
+        ports:
+        - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-api
+  template:
+    metadata:
+      labels:
+        app: todo-api
+    spec:
+      containers:
+      - name: todo-api
+        image: redscuscontainerreg000111.azurecr.io/todo-webapi:v1.0.60
+        ports:
+        - containerPort: 5209
+        env:
+        - name: CorsAllowedHosts
+          value: "*"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blazor
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: blazor
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-api-backend
+spec:
+  type: NodePort
+  ports:
+  - port: 5209
+    targetPort: 5209
+    nodePort: 30001
+  selector:
+    app: todo-api
