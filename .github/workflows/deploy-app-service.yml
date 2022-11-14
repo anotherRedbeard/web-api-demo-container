@@ -8,7 +8,7 @@ on:
       [ main ]
     paths:
     - '**'
-    - '.github/workflows/deploy-package.yml'
+    - '.github/workflows/deploy-app-service.yml'
 
   # Allow mannually trigger 
   workflow_dispatch:      

@@ -1,8 +1,12 @@
 name: deploy-aks-package
-"on":
+on:
     push:
-        branches:
-            - main
+      branches: 
+        [ main ]
+      paths:
+        - '**'
+        - '.github/workflows/deploy-aks-package.yml'
+
     workflow_dispatch: {}
 env:
     ACR_RESOURCE_GROUP: acrworkflow1668445172459
