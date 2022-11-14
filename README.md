@@ -27,11 +27,12 @@ This is meant to be a repo that you can clone and use as you like.  The only thi
 - **Service principle with contributor access to the subscription created as a GitHub Secret**
   - This is only so you can create your resource group at the subscription level, if you don't want to give your service principle that kind of access you will need to have another way to create the resource group and then you can remove that step from the workflow
   - The credentials for this service principle need to be stored according to this document:  [Service Principal Secret](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Clinux#use-the-azure-login-action-with-a-service-principal-secret)
-  - I have used the name `AZURE_CREDENTIALS` for the secret 
+  - I have used the name `AZURE_CREDENTIALS` for the secret
 
 ## Workflow
 
 The workflow has 4 separate stages: expose-env, build-infra, build, deploy
+
 1. expose-env
     - Unfortunately you need to expose the environment variables that you want to use as output variables so they can be passed into the shared workflow. Ideally it would be nice if you could just use the standard `env` variables
 2. build-infra
