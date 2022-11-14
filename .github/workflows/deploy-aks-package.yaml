@@ -1,4 +1,4 @@
-name: deploy-aks-package
+name: Trigger auto deployment for AKS demo
 on:
     push:
       branches: 
