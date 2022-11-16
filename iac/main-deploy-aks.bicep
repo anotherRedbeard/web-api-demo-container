@@ -19,7 +19,7 @@ param osDiskSizeGB int = 0
 param agentCount int = 3
 
 @description('The size of the Virtual Machine.')
-param agentVMSize string = 'standard_d2s_v3'
+param agentVMSize string = 'Standard_DS2_v2'
 
 @minLength(5)
 @maxLength(50)
