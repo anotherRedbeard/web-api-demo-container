@@ -39,7 +39,7 @@ jobs:
                     az group create -l ${{ env.LOCATION }} -n ${{ env.CLUSTER_RESOURCE_GROUP}}
                     az deployment group create --resource-group ${{ env.CLUSTER_RESOURCE_GROUP }} \
                     --template-file ./iac/main-deploy-aks.bicep \
-                    --parameters clusterName=${{ env.CLUSTER_NAME }} acrName=${{ env.AZURE_CONTAINER_REGISTRY }}
+                    --parameters clusterName=${{ env.CLUSTER_NAME }} acrName=${{ env.AZURE_CONTAINER_REGISTRY }} agentCount=2
             
             - name: Azure CLI script
               uses: azure/CLI@v1
