@@ -41,4 +41,4 @@ resource aks 'Microsoft.ContainerService/managedClusters@2022-05-02-preview' = {
 }
 
 output controlPlaneFQDN string = aks.properties.fqdn
-output agentPoolIdentityId string =  aks.properties.identityProfile.kubletIdentity.objectId
+output agentPoolIdentityId string =  aks.properties.identityProfile.kubletidentity.objectId
