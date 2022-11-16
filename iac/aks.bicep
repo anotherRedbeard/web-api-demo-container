@@ -14,16 +14,16 @@ resource aks 'Microsoft.ContainerService/managedClusters@2022-05-02-preview' = {
   }
   properties: {
     dnsPrefix: dnsPrefix
-    agentPoolProfiles: [
-      {
-        name: 'agentpool'
-        osDiskSizeGB: osDiskSizeGB
-        count: agentCount
-        vmSize: agentVMSize
-        osType: 'Linux'
-        mode: 'System'
-      }
-    ]
+    //agentPoolProfiles: [
+    //  {
+    //    name: 'agentpool'
+    //    osDiskSizeGB: osDiskSizeGB
+    //    count: agentCount
+    //    vmSize: agentVMSize
+    //    osType: 'Linux'
+    //    mode: 'System'
+    //  }
+    //]
     securityProfile: {
       defender: {
         logAnalyticsWorkspaceResourceId: logwsid
