@@ -10,6 +10,7 @@ on:
     workflow_dispatch: {}
 env:
     VERSION: v1
+    LOCATION: 'southcentralus'
     ACR_RESOURCE_GROUP: red-aks-demo-rg
     AZURE_CONTAINER_REGISTRY: myAksRepo
     CLUSTER_NAME: myAKSCluster
@@ -19,6 +20,35 @@ env:
     DEPLOYMENT_MANIFEST_PATH: |
         ./azure-aks-deployment.yaml
 jobs:
+    build-infra:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout to the branch
+              uses: actions/checkout@v2
+
+            - name: Azure Login
+              uses: azure/login@v1
+              with:
+                creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+            - name: Create Resource Group, Deploy Bicep
+              uses: azure/CLI@v1
+              with:
+                inlineScript: |
+                    az group create -l ${{ env.LOCATION }} -n ${{ env.CLUSTER_RESOURCE_GROUP}}
+                    az deployment group create --resource-group ${{ env.resource-group-name }} \
+                    --template-file ./iac/main-deploy-aks.bicep \
+                    --parameters clusterName=${{ env.CLUSTER_NAME }} acrName=${{ env.AZURE_CONTAINER_REGISTRY }}
+            
+            - name: Azure CLI script
+              uses: azure/CLI@v1
+              with:
+                inlineScript: |
+                    az logout
+                    az cache purge
+                    az account clear
+
     buildImage:
         permissions:
             contents: read
