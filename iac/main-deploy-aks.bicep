@@ -47,6 +47,7 @@ module acr 'container-registry.bicep' = {
     acrName: acrName
     location: location
     acrSku: acrSku
+    //you will need write permission to do this which is more than a Contributor
     aksKubletPrincipalId: aks.outputs.agentPoolIdentityId
   }
 }

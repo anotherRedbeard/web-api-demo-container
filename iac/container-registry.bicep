@@ -22,8 +22,9 @@ resource acrResource 'Microsoft.ContainerRegistry/registries@2021-06-01-preview'
   }
 }
 
+//you will need write permission to do this which is more than a Contributor
 resource  AssignAcrPullToAks 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
-  name: guid(resourceGroup().id, acrName, aksKubletPrincipalId, 'AssignAcrPullToAks')       // want consistent GUID on each run
+  name: guid(acrResource.id, aksKubletPrincipalId, 'AssignAcrPullToAks')       // want consistent GUID on each run
   scope: acrResource
   properties: {
     description: 'Assign AcrPull role to AKS'
