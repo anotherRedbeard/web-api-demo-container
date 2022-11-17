@@ -22,6 +22,12 @@ resource acrResource 'Microsoft.ContainerRegistry/registries@2021-06-01-preview'
   }
 }
 
+@description('This is the built-in Contributor role. See https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#acrpull')
+resource acrPullRoleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' existing = {
+  scope: subscription()
+  name: '7f951dda-4ed3-4680-a7ca-43fe172d538d'
+}
+
 //you will need write permission to do this which is more than a Contributor
 resource  AssignAcrPullToAks 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
   name: guid(acrResource.id, aksKubletPrincipalId, 'AssignAcrPullToAks')       // want consistent GUID on each run
@@ -30,7 +36,7 @@ resource  AssignAcrPullToAks 'Microsoft.Authorization/roleAssignments@2020-04-01
     description: 'Assign AcrPull role to AKS'
     principalId: aksKubletPrincipalId
     principalType: 'ServicePrincipal'
-    roleDefinitionId: '7f951dda-4ed3-4680-a7ca-43fe172d538d'
+    roleDefinitionId: acrPullRoleDefinition.id
   }
 }
 
