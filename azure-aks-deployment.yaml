@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: todo-api
-        image: myAksRepo.azurecr.io/todo-api
+        image: __ACRFullImageName__
         ports:
         - containerPort: 5209
         env:
@@ -31,10 +31,8 @@ kind: Service
 metadata:
   name: todo-api-backend
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
   - port: 5209
-    targetPort: 5209
-    nodePort: 30001
   selector:
     app: todo-api

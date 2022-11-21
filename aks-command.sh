@@ -17,6 +17,7 @@ kubectl get nodes
 kubectl apply -f azure-k8s.yaml 
 
 #grant access to ACR from AKS cluster
+az aks update -n myAKSCluster -g red-aks-demo-rg --attach-acr redscuscontainerreg000111
 
 #show all pods
 kubectl get pods
