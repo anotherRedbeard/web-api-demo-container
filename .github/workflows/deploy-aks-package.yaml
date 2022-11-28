@@ -17,6 +17,7 @@ env:
     CLUSTER_RESOURCE_GROUP: red-aks-demo-rg
     CONTAINER_NAME: todo-api
     NAMESPACE_NAME: aks-dev-ns
+    BLAZOR_SERVICE_NAME: blazor
     DEPLOYMENT_MANIFEST_PATH: |
         ./azure-aks-deployment.yaml
 jobs:
@@ -85,7 +86,7 @@ jobs:
               uses: azure/CLI@v1
               with:
                 inlineScript: |
-                  BLAZOR_ENDPOINT=$(az aks command invoke -n ${{ env.CLUSTER_NAME }} -g ${{ env.CLUSTER_RESOURCE_GROUP }} -c 'kubectl describe services blazor ${{ env.TODO_BACKEND_SERVICE_NAME }} --namespace ${{ env.NAMESPACE_NAME }}' | awk -F: '/^LoadBalancer Ingress/{print$2}' | xargs echo)
+                  BLAZOR_ENDPOINT=$(az aks command invoke -n ${{ env.CLUSTER_NAME }} -g ${{ env.CLUSTER_RESOURCE_GROUP }} -c 'kubectl describe services ${{ env.BLAZOR_SERVICE_NAME }} --namespace ${{ env.NAMESPACE_NAME }}' | awk -F: '/^LoadBalancer Ingress/{print$2}' | xargs echo)
                   echo BLAZOR_ENDPOINT=$BLAZOR_ENDPOINT >> $GITHUB_ENV
                   echo $BLAZOR_ENDPOINT
             - name: Find and Replace - Using Secrets
