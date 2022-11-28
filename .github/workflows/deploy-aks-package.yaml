@@ -63,11 +63,11 @@ jobs:
               name: Azure login
               with:
                 creds: ${{ secrets.AZURE_CREDENTIALS }}
-            - name: get todo backend api endpoint
+            - name: get blazor app endpoint
               uses: azure/CLI@v1
               with:
                 inlineScript: |
-                  BLAZOR_ENDPOINT=$(az aks command invoke -n ${{ env.CLUSTER_NAME }} -g ${{ env.CLUSTER_RESOURCE_GROUP }} -c 'kubectl describe services ${{ env.TODO_BACKEND_SERVICE_NAME }} --namespace ${{ env.NAMESPACE_NAME }}' | awk -F: '/^LoadBalancer Ingress/{print$2}' | xargs echo)
+                  BLAZOR_ENDPOINT=$(az aks command invoke -n ${{ env.CLUSTER_NAME }} -g ${{ env.CLUSTER_RESOURCE_GROUP }} -c 'kubectl describe services blazor ${{ env.TODO_BACKEND_SERVICE_NAME }} --namespace ${{ env.NAMESPACE_NAME }}' | awk -F: '/^LoadBalancer Ingress/{print$2}' | xargs echo)
                   echo BLAZOR_ENDPOINT=$BLAZOR_ENDPOINT >> $GITHUB_ENV
             - name: Build and push image to ACR
               run: az acr build --image ${{ env.CONTAINER_NAME }}:${{ env.VERSION }}.${{ github.run_number }} --registry ${{ env.AZURE_CONTAINER_REGISTRY }} -g ${{ env.ACR_RESOURCE_GROUP }} -f ./Dockerfile ./
