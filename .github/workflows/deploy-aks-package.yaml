@@ -89,10 +89,14 @@ jobs:
                   BLAZOR_ENDPOINT=$(az aks command invoke -n ${{ env.CLUSTER_NAME }} -g ${{ env.CLUSTER_RESOURCE_GROUP }} -c 'kubectl describe services ${{ env.BLAZOR_SERVICE_NAME }} --namespace ${{ env.NAMESPACE_NAME }}' | awk -F: '/^LoadBalancer Ingress/{print$2}' | xargs echo)
                   echo BLAZOR_ENDPOINT=$BLAZOR_ENDPOINT >> $GITHUB_ENV
                   echo $BLAZOR_ENDPOINT
-            - name: Find and Replace - Using Secrets
+            - name: Find and Replace - ACR image name
               run: find *.yaml -type f -exec sed -i ''s%__ACRFullImageName__%${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ env.VERSION }}.${{ github.run_number }}%g'' {} \;
-            - name: Find and Replace - Using Secrets
+            - name: Update CORS variable base on empty
+              if: ${{ env.BLAXOR_ENDPOINT }} == ''
+              run: echo BLAZOR_ENDPOINT=* >> $GITHUB_ENV
+            - name: Find and Replace - CORS allowed host
               run: find *.yaml -type f -exec sed -i ''s%__CorsAllowedHosts__%http:\/\/${{ env.BLAZOR_ENDPOINT }}%g'' {} \;
+            
             - name: Bash - Show XML Contents
               run: cat ${{ env.DEPLOYMENT_MANIFEST_PATH }}
             - uses: azure/aks-set-context@v3
