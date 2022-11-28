@@ -24,7 +24,7 @@ spec:
         - containerPort: 5209
         env:
         - name: CorsAllowedHosts
-          value: "*"
+          value: "__CorsAllowedHosts__"
 ---
 apiVersion: v1
 kind: Service
