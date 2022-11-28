@@ -66,7 +66,7 @@ jobs:
                 creds: ${{ secrets.AZURE_CREDENTIALS }}
             
             - name: Build and push image to ACR
-              run: az acr build --image ${{ env.CONTAINER_NAME }}:${{ env.VERSION }}.${{ github.run_number }} --registry ${{ env.AZURE_CONTAINER_REGISTRY }} -g ${{ env.ACR_RESOURCE_GROUP }} -f ./Dockerfile ./
+              run: az acr build -t ${{ env.CONTAINER_NAME }}:latest -t ${{ env.CONTAINER_NAME }}:${{ env.VERSION }}.${{ github.run_number }} --registry ${{ env.AZURE_CONTAINER_REGISTRY }} -g ${{ env.ACR_RESOURCE_GROUP }} -f ./Dockerfile ./
             
     deploy:
         permissions:
@@ -97,8 +97,6 @@ jobs:
             - name: Find and Replace - CORS allowed host
               run: find *.yaml -type f -exec sed -i ''s%__CorsAllowedHosts__%${{ env.BLAZOR_ENDPOINT }}%g'' {} \;
             
-            - name: Bash - Show XML Contents
-              run: cat ${{ env.DEPLOYMENT_MANIFEST_PATH }}
             - uses: azure/aks-set-context@v3
               name: Get K8s context
               with:
