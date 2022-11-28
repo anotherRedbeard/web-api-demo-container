@@ -86,7 +86,7 @@ jobs:
             - name: Find and Replace - Using Secrets
               run: find *.yaml -type f -exec sed -i ''s%__ACRFullImageName__%${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ env.VERSION }}.${{ github.run_number }}%g'' {} \;
             - name: Find and Replace - Using Secrets
-              run: find *.yaml -type f -exec sed -i ''s%__CorsAllowedHosts__%${{ env.BLAZOR_ENDPOINT }}%g'' {} \;
+              run: find *.yaml -type f -exec sed -i ''s%__CorsAllowedHosts__%http:\/\/${{ env.BLAZOR_ENDPOINT }}%g'' {} \;
             - name: Bash - Show XML Contents
               run: cat ${{ env.DEPLOYMENT_MANIFEST_PATH }}
             - uses: azure/login@v1.4.3
