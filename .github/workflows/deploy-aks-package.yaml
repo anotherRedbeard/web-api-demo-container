@@ -92,7 +92,7 @@ jobs:
             - name: Find and Replace - ACR image name
               run: find *.yaml -type f -exec sed -i ''s%__ACRFullImageName__%${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ env.VERSION }}.${{ github.run_number }}%g'' {} \;
             - name: Update CORS variable base on empty
-              if: ${{ env.BLAXOR_ENDPOINT }} == ''
+              if: ${{ env.BLAZOR_ENDPOINT }} == ''
               run: echo BLAZOR_ENDPOINT=* >> $GITHUB_ENV
             - name: Find and Replace - CORS allowed host
               run: find *.yaml -type f -exec sed -i ''s%__CorsAllowedHosts__%http:\/\/${{ env.BLAZOR_ENDPOINT }}%g'' {} \;
