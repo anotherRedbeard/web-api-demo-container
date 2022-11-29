@@ -6,9 +6,10 @@ on:
   push:
     branches: 
       [ main ]
-    paths:
-    - '**'
-    - '.github/workflows/deploy-app-service.yml'
+    paths-ignore:
+      - 'README.md'
+      - '.github/workflows/deploy-aca-package.yml'
+      - '.github/workflows/deploy-aks-package.yml'
 
   # Allow manually trigger 
   workflow_dispatch:      

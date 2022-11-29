@@ -3,10 +3,10 @@ on:
     push:
       branches: 
         [ main ]
-      paths:
-        - '**'
-        - '.github/workflows/deploy-aks-package.yml'
-        - !'README.md'
+      paths-ignore:
+        - 'README.md'
+        - '.github/workflows/deploy-aca-package.yml'
+        - '.github/workflows/deploy-app-package.yml'
 
     workflow_dispatch: {}
 env:
