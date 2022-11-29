@@ -10,7 +10,7 @@ on:
     - '**'
     - '.github/workflows/deploy-app-service.yml'
 
-  # Allow mannually trigger 
+  # Allow manually trigger 
   workflow_dispatch:      
 
 env:
@@ -22,7 +22,6 @@ env:
   registry-name: 'redscuscontainerreg000111'
   image-name: 'todo-webapi'
   main-app-service-deployment-name: 'main-deploy-app-service'
-  #cors-allowed-url: 'https://todo-blazorclient-aca.lemontree-689bf7fa.southcentralus.azurecontainerapps.io'
 
 jobs:
   build-infra:
@@ -54,7 +53,7 @@ jobs:
             az cache purge
             az account clear
 
-  build:
+  build-deploy:
     runs-on: ubuntu-latest
     needs: build-infra
 
