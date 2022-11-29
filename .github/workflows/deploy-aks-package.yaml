@@ -6,6 +6,7 @@ on:
       paths:
         - '**'
         - '.github/workflows/deploy-aks-package.yml'
+        - !'README.md'
 
     workflow_dispatch: {}
 env:
