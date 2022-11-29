@@ -31,6 +31,8 @@ This is meant to be a repo that you can clone and use as you like.  The only thi
 
 ## GitHub Workflows
 
+There are a few workflows used by this project to demonstrate the different ways and resources you can deploy to.  Currently there are examples for an App Service, Azure Container App, and Azure Kubernetes Service (AKS).
+
 ### `deploy-aca-package.yml`
 
 The workflow will deploy everything it needs to a given resource group and into an Azure Container App.  It has 4 separate stages: expose-env, build-infra, build, deploy
