@@ -28,7 +28,8 @@ This is meant to be a repo that you can clone and use as you like.  The only thi
   - This is only so you can create your resource group at the subscription level, if you don't want to give your service principle that kind of access you will need to have another way to create the resource group and then you can remove that step from the workflow
   - The credentials for this service principle need to be stored according to this document:  [Service Principal Secret](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Clinux#use-the-azure-login-action-with-a-service-principal-secret)
   - I have used the name `AZURE_CREDENTIALS` for the secret
-  - ==For the AKS deployment== you will need to have write permission which is greater than Contributor so you will need to account for that to associate the Container Registry with the AKS cluster and perform kubectl commands.  For my purposes I setup a custom role based on [these](https://learn.microsoft.com/en-us/azure/role-based-access-control/custom-roles-portal) instructions.  I cloned my role from Contributor and removed this line under "notActions" `"Microsoft.Authorization/*/Write"`
+  - ==For the AKS deployment== you will need to have write permission which is greater than Contributor so you will need to account for that to associate the Container Registry with the AKS cluster and perform kubectl commands.  For my purposes I setup a custom role based on [these](https://learn.microsoft.com/en-us/azure/role-based-access-control/custom-roles-portal) instructions.  I cloned my role from Contributor and removed this line under "notActions":
+    `"Microsoft.Authorization/*/Write"`
 
 ## GitHub Workflows
 
