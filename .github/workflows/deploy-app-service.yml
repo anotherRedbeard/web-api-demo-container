@@ -8,8 +8,7 @@ on:
       [ main ]
     paths-ignore:
       - 'README.md'
-      - '.github/workflows/deploy-aca-package.yml'
-      - '.github/workflows/deploy-aks-package.yml'
+      - '.github/workflows/**'
 
   # Allow manually trigger 
   workflow_dispatch:      
@@ -18,9 +17,9 @@ env:
   version: 'v1.0'
   location: 'southcentralus'
   app-service-postfix: 'todoapi'
-  resource-group-name: 'red-scus-appsrvdemo-rg'
-  registry-rg-name: 'red-scus-test-rg'
-  registry-name: 'redscuscontainerreg000111'
+  resource-group-name: 'brd-scus-appsrvdemo-rg'
+  registry-rg-name: 'brd-scus-test-rg'
+  registry-name: 'brdscuscontainerreg000111'
   image-name: 'todo-webapi'
   main-app-service-deployment-name: 'main-deploy-app-service'
 
