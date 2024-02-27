@@ -8,8 +8,7 @@ on:
       [ main ]
     paths-ignore:
       - 'README.md'
-      - '.github/workflows/deploy-aks-package.yml'
-      - '.github/workflows/deploy-app-package.yml'
+      - '.github/workflows/**'
 
   # Allow mannually trigger 
   workflow_dispatch:      
