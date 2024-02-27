@@ -42,7 +42,7 @@ jobs:
       - name: Print inputs passed to the reusable workflow
         id: print-var
         run: |
-          echo "::set-output name=rg-name::${{ env.resource-group-name }}"
+          echo "rg-name=${{ env.resource-group-name }}" >> $GITHUB_OUTPUT
           echo "::set-output name=location-name::${{ env.location }}"
           echo "::set-output name=law-name::${{ env.log-analytics-workspace-name }}"
           echo "::set-output name=aca-env-name::${{ env.aca-env-name }}"
