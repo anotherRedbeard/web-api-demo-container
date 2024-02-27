@@ -43,11 +43,11 @@ jobs:
         id: print-var
         run: |
           echo "rg-name=${{ env.resource-group-name }}" >> $GITHUB_OUTPUT
-          echo "::set-output name=location-name::${{ env.location }}"
-          echo "::set-output name=law-name::${{ env.log-analytics-workspace-name }}"
-          echo "::set-output name=aca-env-name::${{ env.aca-env-name }}"
-          echo "::set-output name=reg-name::${{ env.registry-name }}"
-          echo "::set-output name=reg-sku::${{ env.registry-sku }}"
+          echo "location-name=${{ env.location }}" >> $GITHUB_OUTPUT
+          echo "law-name=${{ env.log-analytics-workspace-name }}" >> $GITHUB_OUTPUT
+          echo "aca-env-name=${{ env.aca-env-name }}" >> $GITHUB_OUTPUT
+          echo "reg-name=${{ env.registry-name }}" >> $GITHUB_OUTPUT
+          echo "reg-sku=${{ env.registry-sku }}" >> $GITHUB_OUTPUT
 
   build-infra:
     needs: expose-env
