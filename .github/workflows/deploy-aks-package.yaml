@@ -5,17 +5,16 @@ on:
         [ main ]
       paths-ignore:
         - 'README.md'
-        - '.github/workflows/deploy-aca-package.yml'
-        - '.github/workflows/deploy-app-package.yml'
+        - '.github/workflows/**'
 
     workflow_dispatch: {}
 env:
     VERSION: v1
     LOCATION: 'southcentralus'
-    ACR_RESOURCE_GROUP: red-aks-demo-rg
+    ACR_RESOURCE_GROUP: brd-aks-demo-rg
     AZURE_CONTAINER_REGISTRY: myAksRepo
     CLUSTER_NAME: myAKSCluster
-    CLUSTER_RESOURCE_GROUP: red-aks-demo-rg
+    CLUSTER_RESOURCE_GROUP: brd-aks-demo-rg
     CONTAINER_NAME: todo-api
     NAMESPACE_NAME: aks-dev-ns
     BLAZOR_SERVICE_NAME: blazor
