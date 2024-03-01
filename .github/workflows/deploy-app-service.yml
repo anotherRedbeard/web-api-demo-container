@@ -17,7 +17,7 @@ env:
   version: 'v1.0'
   location: 'southcentralus'
   app-service-postfix: 'todoapi'
-  resource-group-name: 'brd-scus-appsrvdemo-rg'
+  resource-group-name: 'brd-scus-test-rg'
   registry-rg-name: 'brd-scus-test-rg'
   registry-name: 'brdscuscontainerreg000111'
   image-name: 'todo-webapi'
