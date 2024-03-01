@@ -12,6 +12,7 @@ env:
     VERSION: v1
     LOCATION: 'southcentralus'
     ACR_RESOURCE_GROUP: brd-aks-demo-rg
+    PREFIX: 'brd'
     AZURE_CONTAINER_REGISTRY: myAksRepo
     CLUSTER_NAME: myAKSCluster
     CLUSTER_RESOURCE_GROUP: brd-aks-demo-rg
@@ -40,7 +41,7 @@ jobs:
                     az group create -l ${{ env.LOCATION }} -n ${{ env.CLUSTER_RESOURCE_GROUP}}
                     az deployment group create --resource-group ${{ env.CLUSTER_RESOURCE_GROUP }} \
                     --template-file ./iac/main-deploy-aks.bicep \
-                    --parameters clusterName=${{ env.CLUSTER_NAME }} acrName=${{ env.AZURE_CONTAINER_REGISTRY }} agentCount=2 dnsPrefix=${{ env.CLUSTER_NAME }}
+                    --parameters clusterName=${{ env.CLUSTER_NAME }} acrName=${{ env.AZURE_CONTAINER_REGISTRY }} agentCount=2 dnsPrefix=${{ env.CLUSTER_NAME }} prefix=${{ env.PREFIX }}
                     az aks update -n ${{ env.CLUSTER_NAME }} -g ${{ env.CLUSTER_RESOURCE_GROUP}} --attach-acr ${{ env.AZURE_CONTAINER_REGISTRY }}
             
             - name: Azure CLI script

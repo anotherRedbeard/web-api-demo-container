@@ -3,9 +3,10 @@ param sku string = 'F1' // The SKU of App Service Plan
 param linuxFxVersion string = 'node|14-lts' // The runtime stack of web app
 param location string = resourceGroup().location // Location for all resources
 param logwsid string
-var appServicePlanName = toLower('red-AppServicePlan-${webAppName}')
-var appInsightsName = toLower('red-AppInsights-${webAppName}')
-var webSiteName = toLower('red-webApp-${webAppName}')
+param prefix string
+var appServicePlanName = toLower('${prefix}-AppServicePlan-${webAppName}')
+var appInsightsName = toLower('${prefix}-AppInsights-${webAppName}')
+var webSiteName = toLower('${prefix}-webApp-${webAppName}')
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2020-06-01' = {
   name: appServicePlanName

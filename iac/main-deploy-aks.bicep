@@ -26,6 +26,11 @@ param agentVMSize string = 'Standard_DS2_v2'
 @description('Provide a globally unique name of your Azure Container Registry')
 param acrName string = 'acr${uniqueString(resourceGroup().id)}'
 
+@maxLength(10)
+@minLength(2)
+@description('The prefix name of the services to create.')
+param prefix string 
+
 @description('Provide a tier of your Azure Container Registry.')
 param acrSku string = 'Basic'
 
@@ -35,6 +40,7 @@ param acrSku string = 'Basic'
 module logws './log-analytics-ws.bicep' = {
   name: 'LogWorkspaceDeployment'
   params: {
+    prefix: prefix
     name:  substring(clusterName,0,10)
     location: location
   }

@@ -16,6 +16,7 @@ on:
 env:
   version: 'v1.0'
   location: 'southcentralus'
+  app-service-prefix: 'brd'
   app-service-postfix: 'todoapi'
   resource-group-name: 'brd-scus-test-rg'
   registry-rg-name: 'brd-scus-test-rg'
@@ -43,7 +44,7 @@ jobs:
             az group create -l ${{ env.location }} -n ${{ env.resource-group-name}}
             az deployment group create --resource-group ${{ env.resource-group-name }} \
              --template-file ./iac/main-deploy-app-service.bicep \
-             --parameters app_service_postfix=${{ env.app-service-postfix }} app_service_sku=B1
+             --parameters app_service_prefix=${{ env.app-service-prefix }} app_service_postfix=${{ env.app-service-postfix }} app_service_sku=B1
       
       - name: Azure CLI script
         uses: azure/CLI@v1

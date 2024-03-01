@@ -1,7 +1,8 @@
 // =========== ws.bicep ===========
+param prefix string
 param name string
 param location string = resourceGroup().location
-var lawName = toLower('red-logworkspace-${name}-01')
+var lawName = toLower('${prefix}-logworkspace-${name}-01')
 
 // =================================
 
