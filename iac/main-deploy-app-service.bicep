@@ -3,6 +3,14 @@
 @description('The location of the app service')
 param location string = resourceGroup().location
 
+@minLength(5)
+@maxLength(50)
+@description('Provide a globally unique name of your Azure Container Registry')
+param acrName string = 'acr${uniqueString(resourceGroup().id)}'
+
+@description('Provide a tier of your Azure Container Registry.')
+param acrSku string = 'Basic'
+
 @maxLength(10)
 @minLength(2)
 @description('The prefix name of the app service to create.')
@@ -30,6 +38,18 @@ module logws './log-analytics-ws.bicep' = {
     prefix: app_service_prefix
     name: app_service_postfix
     location: location
+  }
+}
+
+// Create Container Registry
+resource acrResource 'Microsoft.ContainerRegistry/registries@2021-06-01-preview' = {
+  name: acrName
+  location: location
+  sku: {
+    name: acrSku
+  }
+  properties: {
+    adminUserEnabled: false
   }
 }
 
