@@ -9,7 +9,7 @@ param location string = resourceGroup().location
 @description('Provide a tier of your Azure Container Registry.')
 param acrSku string = 'Basic'
 
-param aksKubletPrincipalId string
+param resourcePrincipalId string
 
 resource acrResource 'Microsoft.ContainerRegistry/registries@2021-06-01-preview' = {
   name: acrName
@@ -29,12 +29,12 @@ resource acrPullRoleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-
 }
 
 //you will need write permission to do this which is more than a Contributor
-resource  AssignAcrPullToAks 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
-  name: guid(acrResource.id, aksKubletPrincipalId, 'AssignAcrPullToAks')       // want consistent GUID on each run
+resource  AssignAcrPullToResource 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
+  name: guid(acrResource.id, resourcePrincipalId, 'AssignAcrPullToAks')       // want consistent GUID on each run
   scope: acrResource
   properties: {
     description: 'Assign AcrPull role to AKS'
-    principalId: aksKubletPrincipalId
+    principalId: resourcePrincipalId
     principalType: 'ServicePrincipal'
     roleDefinitionId: acrPullRoleDefinition.id
   }
