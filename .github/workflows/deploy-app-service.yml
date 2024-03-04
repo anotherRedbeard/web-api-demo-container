@@ -107,12 +107,12 @@ jobs:
           app-name: ${{ env.APP_NAME }}
           images: '${{ env.registry-name }}.azurecr.io/${{ env.image-name }}:latest'
 
-      #- name: Set App Service Config Items
-      #  uses: Azure/appservice-settings@v1
-        #with:
-          #app-name: ${{ env.APP_NAME }}
-          #app-settings-json: |
-            #[
+      - name: Set App Service Config Items
+        uses: Azure/appservice-settings@v1
+        with:
+          app-name: ${{ env.APP_NAME }}
+          app-settings-json: |
+            [
               #{
                 #"name": "DOCKER_REGISTRY_SERVER_PASSWORD",
                 #"value": "${{ env.ACR_PASSWORD }}",
@@ -128,12 +128,12 @@ jobs:
                 #"value": "${{ env.ACR_USERNAME  }}",
                 #"slotSetting": false
               #},
-              #{
-                #"name": "CorsAllowedHosts",
-                #"value": "*",
-                #"slotSetting": false
-              #}
-            #]
+              {
+                "name": "CorsAllowedHosts",
+                "value": "*",
+                "slotSetting": false
+              }
+            ]
 
       - name: Azure CLI script
         uses: azure/CLI@v1
