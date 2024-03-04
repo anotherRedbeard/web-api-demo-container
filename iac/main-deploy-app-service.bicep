@@ -49,7 +49,7 @@ resource acrResource 'Microsoft.ContainerRegistry/registries@2021-06-01-preview'
     name: acrSku
   }
   properties: {
-    adminUserEnabled: false
+    adminUserEnabled: true
   }
 }
 
