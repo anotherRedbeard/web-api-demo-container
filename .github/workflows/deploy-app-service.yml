@@ -44,7 +44,7 @@ jobs:
             az group create -l ${{ env.location }} -n ${{ env.resource-group-name}}
             az deployment group create --resource-group ${{ env.resource-group-name }} \
              --template-file ./iac/main-deploy-app-service.bicep \
-             --parameters app_service_prefix=${{ env.app-service-prefix }} app_service_postfix=${{ env.app-service-postfix }} app_service_sku=B1
+             --parameters app_service_prefix=${{ env.app-service-prefix }} app_service_postfix=${{ env.app-service-postfix }} app_service_sku=B1 acrName=${{ env.registry-name }} 
       
       - name: Azure CLI script
         uses: azure/CLI@v1
