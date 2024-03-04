@@ -39,6 +39,9 @@ resource appi 'Microsoft.Insights/components@2020-02-02' = {
 resource appService 'Microsoft.Web/sites@2020-06-01' = {
   name: webSiteName
   location: location
+  identity: {
+    type: 'SystemAssigned'
+  }
   properties: {
     serverFarmId: appServicePlan.id
     siteConfig: {
@@ -65,3 +68,4 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
 output appName string = appService.name
 output aspName string = appServicePlan.name
 output appInsightsName string = appi.name
+output principalId string = appService.identity.principalId

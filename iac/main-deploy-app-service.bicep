@@ -42,7 +42,7 @@ module logws './log-analytics-ws.bicep' = {
 }
 
 // Create Container Registry
-resource acrResource 'Microsoft.ContainerRegistry/registries@2021-06-01-preview' = {
+/*resource acrResource 'Microsoft.ContainerRegistry/registries@2021-06-01-preview' = {
   name: acrName
   location: location
   sku: {
@@ -50,6 +50,19 @@ resource acrResource 'Microsoft.ContainerRegistry/registries@2021-06-01-preview'
   }
   properties: {
     adminUserEnabled: true
+  }
+}
+*/
+
+// Create Container Registry
+module acr 'container-registry.bicep' = {
+  name: 'ContainerRegistryDeployment'
+  params: {
+    acrName: acrName
+    location: location
+    acrSku: acrSku
+    //you will need write permission to do this which is more than a Contributor
+    aksKubletPrincipalId: appService.outputs.principalId
   }
 }
 
