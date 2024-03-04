@@ -110,10 +110,7 @@ jobs:
       - name: Set App Service Config Items
         uses: Azure/appservice-settings@v1
         with:
-          app-name: ${{ env.APP_NAME }}
-          app-settings-json: |
-            [
-              #{
+          #{
                 #"name": "DOCKER_REGISTRY_SERVER_PASSWORD",
                 #"value": "${{ env.ACR_PASSWORD }}",
                 #"slotSetting": false
@@ -128,6 +125,9 @@ jobs:
                 #"value": "${{ env.ACR_USERNAME  }}",
                 #"slotSetting": false
               #},
+          app-name: ${{ env.APP_NAME }}
+          app-settings-json: |
+            [
               {
                 "name": "CorsAllowedHosts",
                 "value": "*",
