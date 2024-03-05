@@ -91,7 +91,7 @@ jobs:
           file: ./Dockerfile
           context: ./
 
-      - name: Deploy to App Service
+      - name: Update App Service with New Image Name
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.APP_NAME }}

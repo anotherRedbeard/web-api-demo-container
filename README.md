@@ -2,7 +2,7 @@
 
 # Web Api Container App demo
 
-This application is an example web api that has been containerized so it can be deployed into a Azure Container App.
+This application is an example web api that has been containerized so it can be deployed into a Azure Container App, Azure App Service, or AKS depending on which pipeline you would like to use.  It is also created as an example of following deployment best practices for [continuously deployment of containers](https://learn.microsoft.com/en-us/azure/app-service/deploy-best-practices#continuously-deploy-containers).
 
 ## Description
 
