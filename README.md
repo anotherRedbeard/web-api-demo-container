@@ -46,7 +46,7 @@ The workflow will deploy everything it needs to a given resource group and into 
 3. build
     - Builds the container and tags the image
 4. deploy
-    - Uses the container image that was built and pushed to ACR and creates/updates that container app with that newly built image
+    - Uses the container image that was built and pushed to ACR and creates/updates that container app with that newly built image. There is [another repo](https://github.com/anotherRedbeard/blazor-demo-container) that contains a UI (Blazor client app) that will call this `todo`.  There is a reference here to that client UI to get the URI that can be added to CORS. If it doesn't exist it will add `*`.
 
 ### `deploy-aks-package.yml`
 
@@ -57,7 +57,7 @@ The workflow is using bicep templates to create everything it needs for an AKS c
 2. buildImage
     - Builds the container and tags the image
 3. deploy
-    - Part of this solution is a UI (Blazor client app) that connects to this todo api. The first part of this stage is to get that URL so we can add it to the CORS list.
+    - While this repo is only for the `todo` api, there is [another repo](https://github.com/anotherRedbeard/blazor-demo-container) that creates a UI (Blazor client app) that connects to this todo api. The first part of this stage is to get that URL so we can add it to the CORS list.
     - Next we use a `sed` script to replace variables in the AKS deployment file so it can be dynamic to use the container image we just built.
     - Finally we use the deployment file to setup the deployment in AKS
 
@@ -66,7 +66,7 @@ The workflow is using bicep templates to create everything it needs for an AKS c
 The workflow is using bicep templates to create everything it needs for an App services container deployment for this API. It has 2 separate stages: build-infra, build-deploy
 
 1. build-infra
-    - Uses azure credentials to create a resource group via the `az cli` and then calls the `az deployment group create` command to deploy the bicep templates that are stored in the `./iac/` folder.  This will create all the infrastructure you need to support this demo api implementation for AKS.  These actions are idempotent so they can be run multiple times.
+    - Uses azure credentials to create a resource group via the `az cli` and then calls the `az deployment group create` command to deploy the bicep templates that are stored in the `./iac/` folder.  This will create all the infrastructure you need to support this demo api implementation for Azure app service.  These actions are idempotent so they can be run multiple times.
 2. build-deploy
     - Builds the container, tags the image, and deploys it to container registry.
     - Deploys the container to the app service and sets up the config so it can get the image again for scaling and failures.
