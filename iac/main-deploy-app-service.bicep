@@ -42,19 +42,6 @@ module logws './log-analytics-ws.bicep' = {
 }
 
 // Create Container Registry
-/*resource acrResource 'Microsoft.ContainerRegistry/registries@2021-06-01-preview' = {
-  name: acrName
-  location: location
-  sku: {
-    name: acrSku
-  }
-  properties: {
-    adminUserEnabled: true
-  }
-}
-*/
-
-// Create Container Registry
 module acr 'container-registry.bicep' = {
   name: 'ContainerRegistryDeployment'
   params: {
