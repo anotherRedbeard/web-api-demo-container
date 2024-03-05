@@ -87,6 +87,7 @@ jobs:
           push: true
           tags: |
             ${{ env.registry-name }}.azurecr.io/${{ env.image-name }}:latest
+            ${{ env.registry-name }}.azurecr.io/${{ env.image-name }}:${{ github.run_number }}
           file: ./Dockerfile
           context: ./
 
