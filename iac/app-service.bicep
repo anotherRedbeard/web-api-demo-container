@@ -65,6 +65,35 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
   }
 }
 
+resource appService2 'Microsoft.Web/sites@2020-06-01' = {
+  name: format('{0}2', webSiteName)
+  location: location
+  identity: {
+    type: 'SystemAssigned'
+  }
+  properties: {
+    serverFarmId: appServicePlan.id
+    siteConfig: {
+      acrUseManagedIdentityCreds: true
+      linuxFxVersion: linuxFxVersion
+      appSettings: [
+        {
+          name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
+          value: appi.properties.InstrumentationKey
+        }
+        {
+          name: 'ApplicationInsightsAgent_EXTENSION_VERSION'
+          value: '~2'
+        }
+        {
+          name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+          value: appi.properties.ConnectionString
+        }
+      ]
+    }
+  }
+}
+
 // Return the app service name and farm name
 output appName string = appService.name
 output aspName string = appServicePlan.name

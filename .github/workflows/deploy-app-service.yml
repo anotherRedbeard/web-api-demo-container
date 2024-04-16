@@ -97,6 +97,12 @@ jobs:
           app-name: ${{ env.APP_NAME }}
           images: '${{ env.registry-name }}.azurecr.io/${{ env.image-name }}:latest'
 
+      - name: Update App Service with New Image Name
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: '${{ env.APP_NAME }}2'
+          images: '${{ env.registry-name }}.azurecr.io/${{ env.image-name }}:latest'
+
       - name: Set App Service Config Items
         uses: Azure/appservice-settings@v1
         with:
