@@ -99,3 +99,4 @@ output appName string = appService.name
 output aspName string = appServicePlan.name
 output appInsightsName string = appi.name
 output principalId string = appService.identity.principalId
+output principalId2 string = appService2.identity.principalId

@@ -50,6 +50,7 @@ module acr 'container-registry.bicep' = {
     acrSku: acrSku
     //you will need write permission to do this which is more than a Contributor
     resourcePrincipalId: appService.outputs.principalId
+    resourcePrincipalId2: appService.outputs.principalId2
   }
 }
 

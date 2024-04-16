@@ -10,6 +10,7 @@ param location string = resourceGroup().location
 param acrSku string = 'Basic'
 
 param resourcePrincipalId string
+param resourcePrincipalId2 string
 
 resource acrResource 'Microsoft.ContainerRegistry/registries@2021-06-01-preview' = {
   name: acrName
