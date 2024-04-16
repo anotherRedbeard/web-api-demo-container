@@ -43,7 +43,7 @@ resource  AssignAcrPullToResource 'Microsoft.Authorization/roleAssignments@2020-
 
 //you will need write permission to do this which is more than a Contributor
 resource  AssignAcrPullToResource2 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
-  name: guid(acrResource.id, resourcePrincipalId, 'AssignAcrPullToAks')       // want consistent GUID on each run
+  name: guid(acrResource.id, resourcePrincipalId2, 'AssignAcrPullToAks')       // want consistent GUID on each run
   scope: acrResource
   properties: {
     description: 'Assign AcrPull role to AKS'
