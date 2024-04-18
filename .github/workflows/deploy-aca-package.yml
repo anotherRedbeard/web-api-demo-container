@@ -133,12 +133,19 @@ jobs:
             echo ACR_PASSWORD=$ACR_PASSWORD >> $GITHUB_ENV
 
       - name: Get Client Container url
+        id: get-container-url
         uses: azure/CLI@v1
         with:
           inlineScript: |
             az config set extension.use_dynamic_install=yes_without_prompt
-            CLIENT_CONTAINER_URL=$(az containerapp show -n ${{ env.client-container-name }} -g ${{ env.client-container-rg-name }} --query properties.configuration.ingress.fqdn --out tsv || "")
+            CLIENT_CONTAINER_URL=$(az containerapp show -n ${{ env.client-container-name }} -g ${{ env.client-container-rg-name }} --query properties.configuration.ingress.fqdn --out tsv || echo "Error")
             echo CLIENT_CONTAINER_URL=$CLIENT_CONTAINER_URL >> $GITHUB_ENV
+
+      - name: Handle Continaer url failure
+        if: ${{ steps.get-container-url.outputs.CLIENT_CONTAINER_URL == 'Error' }}
+        run: |
+          echo "CLIENT_CONTAINER_URL not obtained. Setting default value."
+          echo "CLIENT_CONTAINER_URL=default-value" >> $GITHUB_ENV
 
       - name: Deploy to containerapp
         uses: azure/CLI@v1
