@@ -36,6 +36,9 @@ app.UseCors(policy => policy
     .WithHeaders(Microsoft.Net.Http.Headers.HeaderNames.ContentType)
 );
 
+//add azure app configuration, I may use this later, but commenting out for now
+//string connectionString = builder.Configuration["AppConfig:ConnectionString"];
+//builder.Configuration.AddAzureAppConfiguration(connectionString);
 
 app.UseAuthorization();
 

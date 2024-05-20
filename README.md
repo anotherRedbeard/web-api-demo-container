@@ -6,7 +6,15 @@ This application is an example web api that has been containerized so it can be 
 
 ## Description
 
-This project was created initially by using the sample todo .Net web api from the Microsoft learn site:  [Create web API using ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-6.0&tabs=visual-studio-code).  It is using an InMemory representation of a database to store the `TodoItemDTO` object.  The api supports the basic CRUD operations.  There is also a Dockerfile as part of this project that is used to containerize the app and push it up to Azure Container Registry(ACR).  Once the image is in ACR, it then creates/updates the Azure Container App for the demo web api.  All of this is done in the `deploy-package.yml` GitHub actions workflow.  See workflow section below for more specifics on the workflow.
+This project was created initially by using the sample todo .Net web api from the Microsoft learn site:  [Create web API using ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-6.0&tabs=visual-studio-code).  Multiple controllers have been added so here is a quick definition of each:
+- TodoController
+  - InMemory representation of a database to store the `TodoItemDTO` object.  The api supports the basic CRUD operations.
+- WeatherForecastController
+  - Returns a hard coded weather forecast as an enumerable that can be used for testing.
+- ConfigController
+  - Sample Azure App Configuration implementation that I like to have around to refer back to.  Please check here if you would like more info on [Azure App Configuration](https://learn.microsoft.com/en-us/azure/azure-app-configuration/overview)
+
+There is also a Dockerfile as part of this project that is used to containerize the app and push it up to Azure Container Registry(ACR).  Once the image is in ACR, it then creates/updates the Azure Container App for the demo web api.  All of this is done in the `deploy-package.yml` GitHub actions workflow.  See workflow section below for more specifics on the workflow.
 
 ## Badges
 
