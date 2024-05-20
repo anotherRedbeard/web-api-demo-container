@@ -158,7 +158,8 @@ jobs:
               --registry-username ${{ env.ACR_USERNAME }} \
               --registry-password ${{ env.ACR_PASSWORD }} \
               --ingress external --target-port 5209 \
-              --env-vars CorsAllowedHosts=$(if [ ${{ env.CLIENT_CONTAINER_URL }} == '' ]; then echo "*"; else echo "https://${{ env.CLIENT_CONTAINER_URL }}"; fi)
+              --env-vars CorsAllowedHosts=$(if [ ${{ env.CLIENT_CONTAINER_URL }} == '' ]; then echo "*"; else echo "https://${{ env.CLIENT_CONTAINER_URL }}"; fi) \
+              AppConfig__Endpoint=${{ secrets.APP_CONFIG_URL }} 
 
       - name: Azure CLI script
         uses: azure/CLI@v1
