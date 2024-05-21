@@ -3,6 +3,7 @@ using Azure.Core.Diagnostics;
 using Azure.Data.AppConfiguration;
 using Azure.Identity;
 using Microsoft.AspNetCore.Mvc;
+using TodoApi.Models;
 using web_api_demo_container.Services;
 
 namespace web_api_demo_container.Controllers;
@@ -60,18 +61,18 @@ public class ConfigController : ControllerBase
     /// <returns></returns>
     [Obsolete("Use GetWithMSIAsync instead")] 
     [HttpGet("getconfig")]
-    public async Task<string> GetWithConnectingStringAsync()
+    public async Task<ConfigItemDTO> GetWithConnectingStringAsync()
     {
         //get connection string from appsettings.json
         string connectionString = _configuration.GetValue<string>("AppConfig:ConnectionString");
         var client = new ConfigurationClient(connectionString);
         ConfigurationSetting setting = await client.GetConfigurationSettingAsync("TestApp:Settings:Message",GetEnvironment());
 
-        return setting.Value;
+        return new ConfigItemDTO(setting.Value);
     }
 
     [HttpGet("getconfigwithmsi")]
-    public async Task<string> GetWithMSIAsync()
+    public async Task<ConfigItemDTO> GetWithMSIAsync()
     {
         //enable logging to debug the DefaultAzureCredential
         //AzureEventSourceListener.CreateConsoleLogger();
@@ -81,6 +82,6 @@ public class ConfigController : ControllerBase
         var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
         ConfigurationSetting setting = await client.GetConfigurationSettingAsync("TestApp:Settings:Message",GetEnvironment());
 
-        return setting.Value;
+        return new ConfigItemDTO(setting.Value);
     }
 }
