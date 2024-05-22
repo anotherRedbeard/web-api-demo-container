@@ -1,7 +1,9 @@
 using System.Configuration;
+using System.IdentityModel.Tokens.Jwt;
 using Azure.Core.Diagnostics;
 using Azure.Data.AppConfiguration;
 using Azure.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TodoApi.Models;
 using web_api_demo_container.Services;
@@ -87,6 +89,31 @@ public class ConfigController : ControllerBase
         string endpoint = _configuration.GetValue<string>("AppConfig:Endpoint");
         var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
         ConfigurationSetting setting = await client.GetConfigurationSettingAsync("TestApp:Settings:Message",GetEnvironment());
+
+        return new ConfigItemDTO(setting.Value);
+    }
+
+    [HttpGet("getconfigusingtoken")]
+    public async Task<ConfigItemDTO> GetConfigUsingTokenAsync([FromHeader(Name = "Authorization")] string authHeader)
+    {
+        //enable logging to debug the DefaultAzureCredential
+        //AzureEventSourceListener.CreateConsoleLogger();
+
+        //get config setting from OID in access token
+        var token = authHeader.Replace("Bearer ", "");
+
+        //parse the token
+        var handler = new JwtSecurityTokenHandler();
+        var jwtToken = handler.ReadToken(token) as JwtSecurityToken;
+
+        //get the oid claim
+        var oidClaim = jwtToken?.Claims.FirstOrDefault(c => c.Type == "oid");
+        var oid = oidClaim?.Value;
+
+        //use the oid to get the config setting
+        string endpoint = _configuration.GetValue<string>("AppConfig:Endpoint");
+        var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
+        ConfigurationSetting setting = await client.GetConfigurationSettingAsync($"TestApp:{oid}:ConnectionString");
 
         return new ConfigItemDTO(setting.Value);
     }
