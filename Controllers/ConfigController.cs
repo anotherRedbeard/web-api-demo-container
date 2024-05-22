@@ -51,6 +51,12 @@ public class ConfigController : ControllerBase
         }
     }
 
+    [HttpGet("getconfigbootstrapped")]
+    public ConfigItemDTO GetConfigAsBootstrapped()
+    {
+        return new ConfigItemDTO(_configuration.GetValue<string>("TestApp:Settings:Message"));
+    }
+
     /// <summary>
     /// Example of getting a configuration setting from Azure App Configuration using a connection string, but don't use this as it requires
     /// you to save the connection string. Use the MSI version instead.
