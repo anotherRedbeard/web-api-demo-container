@@ -32,11 +32,24 @@ This is meant to be a repo that you can clone and use as you like.  The only thi
 
 - **Azure Subscription**
 - **This repo cloned in your own GitHub repo**
+- **Create an appsettings.Development.json file and fill out with the structure from appsettings.json**
 - **Service principle with contributor access to the subscription created as a GitHub Secret**
   - This is only so you can create your resource group at the subscription level, if you don't want to give your service principle that kind of access you will need to have another way to create the resource group and then you can remove that step from the workflow
   - The credentials for this service principle need to be stored according to this document:  [Service Principal Secret](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Clinux#use-the-azure-login-action-with-a-service-principal-secret)
   - I have used the name `AZURE_CREDENTIALS` for the secret
   - ==For the AKS and App Server deployment== you will need to have write permission which is greater than Contributor because these bicep files are assigning a role to the underlying service principal so you can pull the image from the registry in the app service and you can enable the AKS cluster to communicate with the registry and perform kubectl commands.  For my purposes I assigned `User Access Administrator` role to the service principal running the pipeline.
+- **Azure App Configuration resource**
+  - **This is optional and only needed if you want to call the ConfigController**
+  - Add the following configuration settings
+    - | Key     | Value | Label |
+        | ----------- | ----------- | -- |
+        |TestAp:Settings:Message|DEV - Data from Azure App Configuration | dev |
+        |TestAp:Settings:Message|TEST - Data from Azure App Configuration | test |
+        |TestAp:Settings:Sentinel|1 |  |
+        |TestAp:<oid for user 1>:Sentinel|ConnectionStringForUser1 |  |
+        |TestAp:<oid for user 2>:Sentinel|ConnectionStringForUser2 |  |
+    \* `<oid for user 1>` and `<oid for user 2>` should be replaced with the actual Object IDs for the users. This is used in the ConfigController.cs to show how to get a different connectionstring at runtime based on the logged in user
+  - Create a managed identity and grant it `App Configuration Data Reader` on the Azure App Configuration Access Control so it will be able to read the values.
 
 ## GitHub Workflows
 

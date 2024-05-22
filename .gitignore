@@ -16,7 +16,12 @@ nupkg/
 *.user
 *.userosscache
 *.sln.docstates
-appsettings.*
+
+# Ignore envionment files
+appsettings.*.json
+
+# But do not ignore main appsettings.json
+!appsettings.json
 
 # Build results
 [Dd]ebug/

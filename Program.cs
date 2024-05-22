@@ -5,6 +5,7 @@ using web_api_demo_container.Services;
 using Azure.Identity;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 
+IConfigurationRefresher refresher = null!;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,28 +16,6 @@ builder.Services.AddDbContext<TodoContext>(opt =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddSingleton<IWeatherService, InMemoryWeatherService>();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-
-var corsAllowedHosts = builder.Configuration["CorsAllowedHosts"].Split(',');
-
-//policy.WithOrigins("https://localhost:7270","http://localhost:5118","https://win-wire-app--8nfao0p.redgrass-633dc5ff.eastus.azurecontainerapps.io")
-app.UseCors(policy => policy
-    .WithOrigins(corsAllowedHosts)
-    .AllowAnyMethod()
-    .WithHeaders(Microsoft.Net.Http.Headers.HeaderNames.ContentType)
-);
 
 // get the current environment
 var env = builder.Environment;
@@ -65,11 +44,42 @@ switch (env.EnvironmentName)
 //builder.Configuration.AddAzureAppConfiguration(connectionString);
 //this is how with MSI
 builder.Configuration.AddAzureAppConfiguration(options =>
+{
     options.Connect(
         new Uri(builder.Configuration["AppConfig:Endpoint"]),
         new DefaultAzureCredential())
-    .Select(KeyFilter.Any, label)
+    .Select(KeyFilter.Any, label) //filter the keys to only those with the environment label
+    .ConfigureRefresh(refresh =>
+    {
+        refresh.Register("TestApp:Settings:Sentinel",refreshAll: true);
+    }); //register a sentinel key for refresh
+
+    refresher = options.GetRefresher(); //get the refresher so we can inject it into our services that will need it
+});
+
+builder.Services.AddSingleton<IWeatherService, InMemoryWeatherService>();
+builder.Services.AddSingleton<IConfigurationRefresher>(refresher);
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+var corsAllowedHosts = builder.Configuration["CorsAllowedHosts"].Split(',');
+
+//policy.WithOrigins("https://localhost:7270","http://localhost:5118","https://win-wire-app--8nfao0p.redgrass-633dc5ff.eastus.azurecontainerapps.io")
+app.UseCors(policy => policy
+    .WithOrigins(corsAllowedHosts)
+    .AllowAnyMethod()
+    .WithHeaders(Microsoft.Net.Http.Headers.HeaderNames.ContentType)
 );
+
 
 app.UseAuthorization();
 
