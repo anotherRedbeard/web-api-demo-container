@@ -16,7 +16,7 @@ on:
 env:
   version: 'v1.0'
   location: ${{ vars.LOCATION }}
-  app-service-prefix: 'brd'
+  app-service-prefix: 'red'
   app-service-postfix: 'todoapi'
   resource-group-name: ${{ vars.RESOURCE_GROUP_NAME }}
   registry-rg-name: ${{ vars.REGISTRY_RG_NAME }}
