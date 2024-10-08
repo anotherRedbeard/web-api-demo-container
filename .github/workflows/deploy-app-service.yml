@@ -39,6 +39,8 @@ jobs:
 
       - name: Create Resource Group, Deploy Bicep
         uses: azure/CLI@v1
+        env:
+          DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: true
         with:
           inlineScript: |
             az group create -l ${{ env.location }} -n ${{ env.resource-group-name}}
