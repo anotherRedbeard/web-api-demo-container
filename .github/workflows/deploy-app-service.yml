@@ -115,7 +115,13 @@ jobs:
                 "name": "CorsAllowedHosts",
                 "value": "*",
                 "slotSetting": false
+              },
+              {
+                "name": "AppConfig__Endpoint",
+                "value": "",
+                "slotSetting": false
               }
+
             ]
 
       - name: Azure CLI script
