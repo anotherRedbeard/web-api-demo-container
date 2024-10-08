@@ -42,23 +42,28 @@ switch (env.EnvironmentName)
 //this is how with a connectionString
 //string connectionString = builder.Configuration["AppConfig:ConnectionString"];
 //builder.Configuration.AddAzureAppConfiguration(connectionString);
-//this is how with MSI
-builder.Configuration.AddAzureAppConfiguration(options =>
+//this is how with MSI, but I only want to execute this if AppConfig:Endpoint is set
+Console.WriteLine($"AppConfig:Endpoint = {builder.Configuration["AppConfig:Endpoint"]}");
+if (!string.IsNullOrEmpty(builder.Configuration["AppConfig:Endpoint"]))
 {
-    options.Connect(
-        new Uri(builder.Configuration["AppConfig:Endpoint"]),
-        new DefaultAzureCredential())
-    .Select(KeyFilter.Any, label) //filter the keys to only those with the environment label
-    .ConfigureRefresh(refresh =>
+    builder.Configuration.AddAzureAppConfiguration(options =>
     {
-        refresh.Register("TestApp:Settings:Sentinel",refreshAll: true);
-    }); //register a sentinel key for refresh
+        options.Connect(
+            new Uri(builder.Configuration["AppConfig:Endpoint"]),
+            new DefaultAzureCredential())
+        .Select(KeyFilter.Any, label) //filter the keys to only those with the environment label
+        .ConfigureRefresh(refresh =>
+        {
+            refresh.Register("TestApp:Settings:Sentinel",refreshAll: true);
+        }); //register a sentinel key for refresh
 
-    refresher = options.GetRefresher(); //get the refresher so we can inject it into our services that will need it
-});
+        refresher = options.GetRefresher(); //get the refresher so we can inject it into our services that will need it
+    });
+
+    builder.Services.AddSingleton<IConfigurationRefresher>(refresher);
+}
 
 builder.Services.AddSingleton<IWeatherService, InMemoryWeatherService>();
-builder.Services.AddSingleton<IConfigurationRefresher>(refresher);
 
 var app = builder.Build();
 
