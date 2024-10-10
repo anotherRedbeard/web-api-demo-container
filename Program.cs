@@ -8,6 +8,12 @@ using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 IConfigurationRefresher refresher = null!;
 var builder = WebApplication.CreateBuilder(args);
 
+// Add Application Insights telemetry
+builder.Services.AddApplicationInsightsTelemetry(options =>
+{
+    options.ConnectionString = builder.Configuration["ApplicationInsights:ConnectionString"];
+});
+
 // Add services to the container.
 
 builder.Services.AddControllers();
