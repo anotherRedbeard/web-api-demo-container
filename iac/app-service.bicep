@@ -60,6 +60,10 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
           name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
           value: appi.properties.ConnectionString
         }
+        {
+          name: 'ApplicationInsights__ConnectionString'
+          value: appi.properties.ConnectionString
+        }
       ]
     }
   }
