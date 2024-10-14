@@ -86,6 +86,22 @@ resource stageSlot 'Microsoft.Web/sites/slots@2020-06-01' = {
           name: 'AppConfig__Endpoint'
           value: ''
         }
+        {
+          name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
+          value: appi.properties.InstrumentationKey
+        }
+        {
+          name: 'ApplicationInsightsAgent_EXTENSION_VERSION'
+          value: '~2'
+        }
+        {
+          name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+          value: appi.properties.ConnectionString
+        }
+        {
+          name: 'ApplicationInsights__ConnectionString'
+          value: appi.properties.ConnectionString
+        }
       ]
     }
   }
