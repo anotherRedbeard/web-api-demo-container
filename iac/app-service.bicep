@@ -67,30 +67,30 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
       ]
     }
   }
-
-  resource stageSlot 'slots' = {
-    name: 'stage'
-    location: location
-    kind: 'app,linux,container'
-    properties: {
-      serverFarmId: appServicePlan.id
-      siteConfig: {
-        acrUseManagedIdentityCreds: true
-        appSettings: [
-          {
-            name: 'CorsAllowedHosts'
-            value: '*'
-          }
-          {
-            name: 'AppConfig__Endpoint'
-            value: ''
-          }
-        ]
-      }
+}
+resource stageSlot 'Microsoft.Web/sites/slots@2020-06-01' = {
+  parent: appService
+  name: 'stage'
+  location: location
+  kind: 'app,linux,container'
+  properties: {
+    serverFarmId: appServicePlan.id
+    siteConfig: {
+      acrUseManagedIdentityCreds: true
+      appSettings: [
+        {
+          name: 'CorsAllowedHosts'
+          value: '*'
+        }
+        {
+          name: 'AppConfig__Endpoint'
+          value: ''
+        }
+      ]
     }
-    identity: {
-      type: 'SystemAssigned'
-    }
+  }
+  identity: {
+    type: 'SystemAssigned'
   }
 }
 
@@ -99,3 +99,4 @@ output appName string = appService.name
 output aspName string = appServicePlan.name
 output appInsightsName string = appi.name
 output principalId string = appService.identity.principalId
+output slotPrincipalId string = stageSlot.identity.principalId

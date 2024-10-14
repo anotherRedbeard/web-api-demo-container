@@ -10,6 +10,7 @@ param location string = resourceGroup().location
 param acrSku string = 'Basic'
 
 param resourcePrincipalId string
+param slotResourcePrincipalId string
 
 resource acrResource 'Microsoft.ContainerRegistry/registries@2021-06-01-preview' = {
   name: acrName
@@ -35,6 +36,18 @@ resource  AssignAcrPullToResource 'Microsoft.Authorization/roleAssignments@2020-
   properties: {
     description: 'Assign AcrPull role to AKS'
     principalId: resourcePrincipalId
+    principalType: 'ServicePrincipal'
+    roleDefinitionId: acrPullRoleDefinition.id
+  }
+}
+
+//you will need write permission to do this which is more than a Contributor
+resource  AssignAcrPullToSlotResource 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
+  name: guid(acrResource.id, slotResourcePrincipalId, 'AssignAcrPullToAks')       // want consistent GUID on each run
+  scope: acrResource
+  properties: {
+    description: 'Assign AcrPull role to AKS'
+    principalId: slotResourcePrincipalId
     principalType: 'ServicePrincipal'
     roleDefinitionId: acrPullRoleDefinition.id
   }
