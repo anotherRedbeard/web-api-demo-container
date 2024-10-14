@@ -22,7 +22,7 @@ param app_service_prefix string
 param app_service_postfix string 
 
 @allowed([
-  'B1'
+  'B1','P0V3'
 ])
 @description('The name of the app service sku.')
 param app_service_sku string
