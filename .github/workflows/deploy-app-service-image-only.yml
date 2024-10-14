@@ -89,7 +89,7 @@ jobs:
 
       - name: Swap slots
         run: |
-          az webapp deployment slot swap --resource-group ${{ env.RESOURCE_GROUP }} --name ${{ env.APP_NAME }} --slot stage --target-slot production
+          az webapp deployment slot swap --resource-group ${{ env.resource-group-name }} --name ${{ env.APP_NAME }} --slot stage --target-slot production
   
       - name: Azure CLI script
         uses: azure/CLI@v1
