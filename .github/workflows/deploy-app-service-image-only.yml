@@ -78,6 +78,7 @@ jobs:
 
   swap-slot:
     runs-on: ubuntu-latest
+    needs: build-deploy
     environment: Prod
 
     steps:
@@ -86,6 +87,14 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Get App Name
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            APP_NAME=$(az deployment group show -g ${{ env.resource-group-name }} -n ${{ env.main-app-service-deployment-name }} --query properties.outputs.appServiceName.value  --output tsv)
+            echo APP_NAME=$APP_NAME >> $GITHUB_ENV
+  
 
       - name: Swap slots
         run: |
