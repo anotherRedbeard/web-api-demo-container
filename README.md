@@ -82,7 +82,7 @@ The workflow is using bicep templates to create everything it needs for an AKS c
     - Next we use a `sed` script to replace variables in the AKS deployment file so it can be dynamic to use the container image we just built.
     - Finally we use the deployment file to setup the deployment in AKS
 
-### `deploy-app-package.yml`
+### `deploy-app-service.yml`
 
 The workflow is using bicep templates to create everything it needs for an App services container deployment for this API. It has 2 separate stages: build-infra, build-deploy
 
@@ -91,3 +91,14 @@ The workflow is using bicep templates to create everything it needs for an App s
 2. build-deploy
     - Builds the container, tags the image, and deploys it to container registry.
     - Deploys the container to the app service and sets up the config so it can get the image again for scaling and failures.
+
+### `deploy-app-service-image-only.yml`
+
+The workflow deploys a new version of the code to a container, pushes it to the registry and then updates the app service 'stage' slot with the new image revision.  This assumes that all of the infrastructure is already in place (see previous workflow `deploy-app-service.yml`). It has 2 separate stages: build-deploy, swap-slot
+
+1. build-deploy
+    - Builds the container, tags the image, and deploys it to container registry.
+    - Deploys the container to the app service
+2. swap-slot
+    - Uses the environment parameter to ensure that a manual approval can be done before swapping the slots
+    - Swaps the stage slot to the production slot once it has been approved
