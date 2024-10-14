@@ -19,6 +19,7 @@ nupkg/
 
 # Ignore envionment files
 appsettings.*.json
+monitor-api.*.sh
 
 # But do not ignore main appsettings.json
 !appsettings.json
