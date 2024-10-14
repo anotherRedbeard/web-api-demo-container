@@ -67,6 +67,31 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
       ]
     }
   }
+
+  resource stageSlot 'slots' = {
+    name: 'stage'
+    location: location
+    kind: 'app,linux,container'
+    properties: {
+      serverFarmId: appServicePlan.id
+      siteConfig: {
+        acrUseManagedIdentityCreds: true
+        appSettings: [
+          {
+            name: 'CorsAllowedHosts'
+            value: '*'
+          }
+          {
+            name: 'AppConfig__Endpoint'
+            value: ''
+          }
+        ]
+      }
+    }
+    identity: {
+      type: 'SystemAssigned'
+    }
+  }
 }
 
 resource appService2 'Microsoft.Web/sites@2020-06-01' = {
