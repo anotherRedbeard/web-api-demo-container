@@ -13,7 +13,7 @@ namespace web_api_demo_container.Services
                 {
                     Date = DateTime.Now.AddDays(index),
                     TemperatureC = Random.Shared.Next(-20, 55),
-                    Summary = "green-" + Summaries[Random.Shared.Next(Summaries.Length)]
+                    Summary = "blue-" + Summaries[Random.Shared.Next(Summaries.Length)]
                 }).ToList();
 
             return Task.FromResult(weather);
