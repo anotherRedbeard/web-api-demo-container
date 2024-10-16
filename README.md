@@ -94,7 +94,7 @@ The workflow is using bicep templates to create everything it needs for an App s
 
 ### `deploy-app-service-image-only.yml`
 
-The workflow deploys a new version of the code to a container, pushes it to the registry and then updates the app service 'stage' slot with the new image revision.  This assumes that all of the infrastructure is already in place (see previous workflow `deploy-app-service.yml`). It has 2 separate stages: build-deploy, swap-slot
+The workflow deploys a new version of the code to a container, pushes it to the registry and then updates the app service 'stage' slot with the new image revision.  This assumes that all of the infrastructure is already in place (see previous workflow `deploy-app-service.yml`) and it meant to demonstrate [slot deployments](https://learn.microsoft.com/en-us/azure/app-service/deploy-staging-slots?tabs=portal) for zero downtime on your app service. It has 2 separate stages: build-deploy, swap-slot
 
 1. build-deploy
     - Builds the container, tags the image, and deploys it to container registry.
@@ -102,3 +102,7 @@ The workflow deploys a new version of the code to a container, pushes it to the 
 2. swap-slot
     - Uses the environment parameter to ensure that a manual approval can be done before swapping the slots
     - Swaps the stage slot to the production slot once it has been approved
+
+In order to test this, there is a `monitor-api.sh` file that can be used to ping the api every 2 seconds to show how the latency isn't impacted by just swapping the slots. If you want, you can create a copy of the `monitor-api.sh` file into an environment specific file `monitor-api.dev.sh` that is ignored by the `.gitignore` file. Here is an example output that shows the response changes from being prefixed with 'green' and then swapped to be prefixed with 'blue':
+
+![Image showing slot swapping response times](./img/monitor-example.png)
