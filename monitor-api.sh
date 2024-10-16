@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# URL of your API endpoint
-API_URL="<api-url>"
+# URL of the weather API endpoint
+API_URL="<weather-api-url>"
 
 # Interval between requests in seconds
 INTERVAL=2
