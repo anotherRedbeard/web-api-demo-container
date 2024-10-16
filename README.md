@@ -22,6 +22,7 @@ There is also a Dockerfile as part of this project that is used to containerize 
 | ----------- | ----------- |
 | Azure Container App Deployment | [![Trigger container apps deployment](https://github.com/anotherRedbeard/web-api-demo-container/actions/workflows/deploy-aca-package.yml/badge.svg?branch=main)](https://github.com/anotherRedbeard/web-api-demo-container/actions/workflows/deploy-aca-package.yml) |
 | Azure App Service Deployment | [![Trigger app service deployment](https://github.com/anotherRedbeard/web-api-demo-container/actions/workflows/deploy-app-service.yml/badge.svg)](https://github.com/anotherRedbeard/web-api-demo-container/actions/workflows/deploy-app-service.yml) |
+| Azure App Service Slot Deployment | [![Trigger app service deployment of image only](https://github.com/anotherRedbeard/web-api-demo-container/actions/workflows/deploy-app-service-image-only.yml/badge.svg)](https://github.com/anotherRedbeard/web-api-demo-container/actions/workflows/deploy-app-service-image-only.yml) |
 | Azure Kubernetes Service (AKS) Deployment   | [![Trigger aks app deployment](https://github.com/anotherRedbeard/web-api-demo-container/actions/workflows/deploy-aks-package.yaml/badge.svg)](https://github.com/anotherRedbeard/web-api-demo-container/actions/workflows/deploy-aks-package.yaml)        |
 
 ## How to use
