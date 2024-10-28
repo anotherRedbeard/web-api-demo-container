@@ -68,6 +68,29 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
     }
   }
 }
+
+resource symbolicname 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
+  name: '${webSiteName}-diagnosticSettings'
+  scope: appService
+  properties: {
+    workspaceId: logwsid
+    logs: [
+      {
+        category: 'AppServiceHTTPLogs'
+        enabled: true
+      }
+      {
+        category: 'AppServiceConsoleLogs'
+        enabled: true
+      }
+      {
+        category: 'AppServiceAppLogs'
+        enabled: true
+      }
+    ]
+  }
+}
+
 resource stageSlot 'Microsoft.Web/sites/slots@2020-06-01' = {
   parent: appService
   name: 'stage'
