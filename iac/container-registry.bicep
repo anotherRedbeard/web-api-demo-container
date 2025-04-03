@@ -30,7 +30,7 @@ resource acrPullRoleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-
 }
 
 //you will need write permission to do this which is more than a Contributor
-resource  AssignAcrPullToResource 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
+resource AssignAcrPullToResource 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = if (resourcePrincipalId != '') {
   name: guid(acrResource.id, resourcePrincipalId, 'AssignAcrPullToAks')       // want consistent GUID on each run
   scope: acrResource
   properties: {
@@ -42,7 +42,7 @@ resource  AssignAcrPullToResource 'Microsoft.Authorization/roleAssignments@2020-
 }
 
 //you will need write permission to do this which is more than a Contributor
-resource  AssignAcrPullToSlotResource 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
+resource AssignAcrPullToSlotResource 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = if (slotResourcePrincipalId != '') {
   name: guid(acrResource.id, slotResourcePrincipalId, 'AssignAcrPullToAks')       // want consistent GUID on each run
   scope: acrResource
   properties: {

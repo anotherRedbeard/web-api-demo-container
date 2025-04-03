@@ -55,6 +55,7 @@ module acr 'container-registry.bicep' = {
     acrSku: acrSku
     //you will need write permission to do this which is more than a Contributor
     resourcePrincipalId: aks.outputs.agentPoolIdentityId
+    slotResourcePrincipalId: ''
   }
 }
 

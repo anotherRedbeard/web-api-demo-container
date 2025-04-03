@@ -15,16 +15,16 @@ on:
 
 env:
   version: 'v1.0'
-  location: 'southcentralus'
-  resource-group-name: 'brd-scus-test-rg'
-  log-analytics-workspace-name: 'brdscusworkspace00111'
+  location: 'eastus2'
+  resource-group-name: 'red-eus2-aca-rg'
+  log-analytics-workspace-name: 'redeus2workspace01'
   aca-env-name: 'dev-env'
-  registry-name: 'brdscuscontainerreg000111'
+  registry-name: 'redeus2containerreg01'
   registry-sku: 'Standard'
   image-name: 'todo-webapi'
   container-name: 'todo-webapi-aca'
   client-container-name: 'todo-blazorclient-aca'
-  client-container-rg-name: 'brd-scus-test-rg'
+  client-container-rg-name: 'red-eus2-aca-rg'
 
 jobs:
   expose-env:
