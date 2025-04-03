@@ -17,7 +17,7 @@ env:
   version: 'v1.0'
   location: 'eastus2'
   resource-group-name: 'red-eus2-aca-rg'
-  log-analytics-workspace-name: 'redeus2workspace01'
+  log-analytics-workspace-name: 'red-logworkspace-aca-01'
   aca-env-name: 'dev-env'
   registry-name: 'redeus2containerreg01'
   registry-sku: 'Standard'
