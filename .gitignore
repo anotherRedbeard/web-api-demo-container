@@ -5,6 +5,9 @@ project.lock.json
 *.pyc
 nupkg/
 
+# dev files
+iac/**.**.bicepparam
+
 # Visual Studio Code
 .vscode
 
