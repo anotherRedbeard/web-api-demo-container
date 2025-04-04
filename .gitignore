@@ -7,7 +7,6 @@ nupkg/
 
 # dev files
 iac/**.**.bicepparam
-*.dev.bicepparam
 
 # Visual Studio Code
 .vscode
