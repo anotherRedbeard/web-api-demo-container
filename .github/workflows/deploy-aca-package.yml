@@ -119,8 +119,8 @@ jobs:
           ingress: external
           targetPort: 5209
           environmentVariables: |
-            CorsAllowedHosts=$(if [ ${{ env.CLIENT_CONTAINER_URL }} == '' ]; then echo "*"; else echo "https://${{ env.CLIENT_CONTAINER_URL }}"; fi)
-            AppConfig__Endpoint=${{ secrets.APP_CONFIG_URL }}
+            CorsAllowedHosts=$(if [ ${{ env.CLIENT_CONTAINER_URL }} == '' ]; then echo "*"; else echo "https://${{ env.CLIENT_CONTAINER_URL }}"; fi) \
+            AppConfig__Endpoint=${{ secrets.APP_CONFIG_URL }} \
             ASPNETCORE_ENVIRONMENT=Staging
       #- name: Deploy to containerapp
       #  uses: azure/CLI@v1
