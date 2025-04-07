@@ -48,6 +48,9 @@ param tagsArray array = [
   {tag2: 'value2'}
 ]
 
+@description('The name of the container app environment.')
+param containerAppEnvName string = '<environment-name>'
+
 // =================================
 
 // Create Log Analytics workspace
@@ -73,6 +76,17 @@ module acr 'container-registry.bicep' = {
   }
 }
 
+// Create container app
+module containerApp './container-app.bicep' = {
+  name: 'ContainerAppDeployment'
+  params: {
+    location: location
+    envName: containerAppEnvName
+    lawCustomerId: logws.outputs.lawCustomerId // Corrected to use the correct output property
+    lawSharedKey: logws.outputs.lawPrimarySharedKey // Corrected to use the correct output property
+  }
+}
+
 // Create app configuration
 module appConfig './app-configuration.bicep' = {
   name: 'AppConfigurationDeployment'
@@ -83,5 +97,6 @@ module appConfig './app-configuration.bicep' = {
     keyValueValues: keyValueValues
     contentTypes: contentTypes
     tagsArray: tagsArray
+    connectingResourcePrincipalId: containerApp.outputs.acaEnvPrincipalId // Assuming the container app has a managed identity
   }
 }

@@ -27,45 +27,8 @@ env:
   client-container-rg-name: 'red-eus2-aca-rg'
 
 jobs:
-  expose-env:
-    runs-on: ubuntu-latest
-
-    outputs:
-      rg-name: ${{ steps.print-var.outputs.rg-name }}
-      location-name: ${{ steps.print-var.outputs.location-name }}
-      law-name: ${{ steps.print-var.outputs.law-name }}
-      aca-env-name: ${{ steps.print-var.outputs.aca-env-name }}
-      reg-name: ${{ steps.print-var.outputs.reg-name }}
-      reg-sku: ${{ steps.print-var.outputs.reg-sku }}
-      
-    steps:
-      - name: Print inputs passed to the reusable workflow
-        id: print-var
-        run: |
-          echo "rg-name=${{ env.resource-group-name }}" >> $GITHUB_OUTPUT
-          echo "location-name=${{ env.location }}" >> $GITHUB_OUTPUT
-          echo "law-name=${{ env.log-analytics-workspace-name }}" >> $GITHUB_OUTPUT
-          echo "aca-env-name=${{ env.aca-env-name }}" >> $GITHUB_OUTPUT
-          echo "reg-name=${{ env.registry-name }}" >> $GITHUB_OUTPUT
-          echo "reg-sku=${{ env.registry-sku }}" >> $GITHUB_OUTPUT
-
-  build-infra:
-    needs: expose-env
-
-    uses: anotherRedbeard/reusable-workflows/.github/workflows/create-aca-infra.yml@main
-    with:
-      rg-name: ${{ needs.expose-env.outputs.rg-name }}
-      location: ${{ needs.expose-env.outputs.location-name }}
-      law-name: ${{ needs.expose-env.outputs.law-name }}
-      aca-env-name: ${{ needs.expose-env.outputs.aca-env-name }}
-      reg-name: ${{ needs.expose-env.outputs.reg-name }}
-      reg-sku: ${{ needs.expose-env.outputs.reg-sku }}
-    secrets:
-      azure-creds: ${{ secrets.AZURE_CREDENTIALS }}
-
   build:
     runs-on: ubuntu-latest
-    needs: build-infra
 
     steps:
       - name: Checkout to the branch

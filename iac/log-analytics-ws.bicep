@@ -20,3 +20,5 @@ resource logws 'Microsoft.OperationalInsights/workspaces@2021-06-01' = {
 // Return the workspace identifier
 output id string = logws.id
 output lawName string = logws.name
+output lawCustomerId string = logws.properties.customerId
+output lawPrimarySharedKey string = listKeys(logws.id, '2021-06-01').primarySharedKey

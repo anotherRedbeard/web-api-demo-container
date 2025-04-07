@@ -17,6 +17,8 @@ param tagsArray array = [
   {tag2: 'value2'}
 ]
 
+param connectingResourcePrincipalId string
+
 resource configStore 'Microsoft.AppConfiguration/configurationStores@2024-05-01' = {
   name: configStoreName
   location: location
@@ -44,3 +46,13 @@ resource configStoreKeyValue 'Microsoft.AppConfiguration/configurationStores/key
     tags: i < length(tagsArray) ? tagsArray[i] : {}
   }
 }]
+
+// Assign App Configuration Data Reader role to the container app's managed identity
+resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(configStore.name, connectingResourcePrincipalId, 'AppConfigurationDataReaderRole')
+  scope: configStore // Reference to the App Configuration store
+  properties: {
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '516239f1-63e1-4d78-a4de-a74fb236a071') // App Configuration Data Reader role ID
+    principalId: connectingResourcePrincipalId // Managed identity of the container app
+  }
+}
