@@ -127,7 +127,7 @@ jobs:
       - name: Assign AcrPull to Container App
         run: |
           CONTAINER_APP_ID=$(az containerapp show --name ${{ env.container-name }} --resource-group ${{ env.resource-group-name }} --query "identity.principalId" -o tsv)
-          APPCONFIG_ID=$(az acr show --name ${{ env.app-config-name }} --resource-group ${{ env.resource-group-name }} --query "id" -o tsv)
+          APPCONFIG_ID=$(az appconfig show --name ${{ env.app-config-name }} --resource-group ${{ env.resource-group-name }} --query "id" -o tsv)
           az role assignment create \
             --assignee $CONTAINER_APP_ID \
             --role "App Configuration Data Reader" \
