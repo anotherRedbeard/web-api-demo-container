@@ -110,9 +110,21 @@ jobs:
           echo "CLIENT_CONTAINER_URL not obtained. Setting default value."
           echo "CLIENT_CONTAINER_URL=default-value" >> $GITHUB_ENV
 
-      - name: Deploy to containerapp
-        uses: azure/CLI@v1
+      - name: Deploy to Container Apps
+        uses: azure/container-apps-deploy-action@v1
         with:
+          imageToDeploy: ${{ env.registry-name }}.azurecr.io/${{ env.image-name }}:${{ env.version }}.${{ github.run_number }}
+          resourceGroup: ${{ env.resource-group-name }}
+          containerAppName: ${{ env.container-name }}
+          ingress: external
+          targetPort: 5209
+          environmentVariables: |
+            CorsAllowedHosts=$(if [ ${{ env.CLIENT_CONTAINER_URL }} == '' ]; then echo "*"; else echo "https://${{ env.CLIENT_CONTAINER_URL }}"; fi)
+            AppConfig__Endpoint=${{ secrets.APP_CONFIG_URL }}
+            ASPNETCORE_ENVIRONMENT=Staging
+      #- name: Deploy to containerapp
+      #  uses: azure/CLI@v1
+      #  with:
           #inlineScript: |
           #  az config set extension.use_dynamic_install=yes_without_prompt
           #  az containerapp update -n ${{ env.container-name }} -g ${{ env.resource-group-name }} \
@@ -124,10 +136,6 @@ jobs:
           #    --env-vars CorsAllowedHosts=$(if [ ${{ env.CLIENT_CONTAINER_URL }} == '' ]; then echo "*"; else echo "https://${{ env.CLIENT_CONTAINER_URL }}"; fi) \
           #    AppConfig__Endpoint=${{ secrets.APP_CONFIG_URL }} \
           #    ASPNETCORE_ENVIRONMENT=Staging
-          inlineScript: |
-            az config set extension.use_dynamic_install=yes_without_prompt
-            az containerapp update -n ${{ env.container-name }} -g ${{ env.resource-group-name }} \
-              --image ${{ env.registry-name }}.azurecr.io/${{ env.image-name }}:${{ env.version }}.${{ github.run_number }}
 
       - name: Azure CLI script
         uses: azure/CLI@v1
