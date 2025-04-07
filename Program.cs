@@ -56,7 +56,7 @@ if (!string.IsNullOrEmpty(builder.Configuration["AppConfig:Endpoint"]))
     {
         options.Connect(
             new Uri(builder.Configuration["AppConfig:Endpoint"]),
-            new DefaultAzureCredential())
+            new ManagedIdentityCredential())
         .Select(KeyFilter.Any, label) //filter the keys to only those with the environment label
         .ConfigureRefresh(refresh =>
         {
