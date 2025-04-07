@@ -117,10 +117,6 @@ jobs:
             az config set extension.use_dynamic_install=yes_without_prompt
             az containerapp update -n ${{ env.container-name }} -g ${{ env.resource-group-name }} \
               --image ${{ env.registry-name }}.azurecr.io/${{ env.image-name }}:${{ env.version }}.${{ github.run_number }} \
-              --environment ${{ env.aca-env-name }} --registry-server ${{ env.registry-name }}.azurecr.io \
-              --registry-username ${{ env.ACR_USERNAME }} \
-              --registry-password ${{ env.ACR_PASSWORD }} \
-              --ingress external --target-port 5209 \
               --env-vars CorsAllowedHosts=$(if [ ${{ env.CLIENT_CONTAINER_URL }} == '' ]; then echo "*"; else echo "https://${{ env.CLIENT_CONTAINER_URL }}"; fi) \
               AppConfig__Endpoint=${{ secrets.APP_CONFIG_URL }} \
               ASPNETCORE_ENVIRONMENT=Staging
