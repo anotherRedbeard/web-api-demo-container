@@ -25,6 +25,7 @@ env:
   container-name: 'todo-webapi-aca'
   client-container-name: 'todo-blazorclient-aca'
   client-container-rg-name: 'red-eus2-aca-rg'
+  app-config-name: 'red-eus2-academo-appconfig'
 
 jobs:
   build:
@@ -122,20 +123,15 @@ jobs:
             CorsAllowedHosts=$(if [ ${{ env.CLIENT_CONTAINER_URL }} == '' ]; then echo "*"; else echo "https://${{ env.CLIENT_CONTAINER_URL }}"; fi) \
             AppConfig__Endpoint=${{ secrets.APP_CONFIG_URL }} \
             ASPNETCORE_ENVIRONMENT=Staging
-      #- name: Deploy to containerapp
-      #  uses: azure/CLI@v1
-      #  with:
-          #inlineScript: |
-          #  az config set extension.use_dynamic_install=yes_without_prompt
-          #  az containerapp update -n ${{ env.container-name }} -g ${{ env.resource-group-name }} \
-          #    --image ${{ env.registry-name }}.azurecr.io/${{ env.image-name }}:${{ env.version }}.${{ github.run_number }} \
-          #    --environment ${{ env.aca-env-name }} --registry-server ${{ env.registry-name }}.azurecr.io \
-          #    --registry-username ${{ env.ACR_USERNAME }} \
-          #    --registry-password ${{ env.ACR_PASSWORD }} \
-          #    --ingress external --target-port 5209 \
-          #    --env-vars CorsAllowedHosts=$(if [ ${{ env.CLIENT_CONTAINER_URL }} == '' ]; then echo "*"; else echo "https://${{ env.CLIENT_CONTAINER_URL }}"; fi) \
-          #    AppConfig__Endpoint=${{ secrets.APP_CONFIG_URL }} \
-          #    ASPNETCORE_ENVIRONMENT=Staging
+
+      - name: Assign AcrPull to Container App
+        run: |
+          CONTAINER_APP_ID=$(az containerapp show --name ${{ env.container-name }} --resource-group ${{ env.resource-group-name }} --query "identity.principalId" -o tsv)
+          APPCONFIG_ID=$(az acr show --name ${{ env.app-config-name }} --resource-group ${{ env.resource-group-name }} --query "id" -o tsv)
+          az role assignment create \
+            --assignee $CONTAINER_APP_ID \
+            --role "App Configuration Data Reader" \
+            --scope $APPCONFIG_ID
 
       - name: Azure CLI script
         uses: azure/CLI@v1
