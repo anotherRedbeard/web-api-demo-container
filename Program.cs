@@ -68,6 +68,10 @@ if (!string.IsNullOrEmpty(builder.Configuration["AppConfig:Endpoint"]))
 
     builder.Services.AddSingleton<IConfigurationRefresher>(refresher);
 }
+else
+{
+    builder.Services.AddSingleton<IConfigurationRefresher>(_ => null!);
+}
 
 builder.Services.AddSingleton<IWeatherService, InMemoryWeatherService>();
 
