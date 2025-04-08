@@ -40,6 +40,11 @@ jobs:
               with:
                 creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+            - name: Debug Key Value Values
+              run: |
+                  echo "KEY_VALUE_KEYS=${{ secrets.KEY_VALUE_KEYS }}"
+                  echo "KEY_VALUE_VALUES=${{ secrets.KEY_VALUE_VALUES }}"
+                  echo '${{ secrets.KEY_VALUE_VALUES }}' | jq
             - name: Create Resource Group, Deploy Bicep
               uses: azure/CLI@v1
               with:
