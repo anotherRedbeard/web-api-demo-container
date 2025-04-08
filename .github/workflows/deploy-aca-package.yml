@@ -47,7 +47,7 @@ jobs:
                     az group create -l ${{ env.location }} -n ${{ env.resource-group-name}}
                     az deployment group create --resource-group ${{ env.resource-group-name }} \
                     --name todo-webapi-aca \
-                    --parameters ./iac/main-deploy-aca.bicepparam keyValueNames=${{ secrets.KEY_VALUE_NAMES }} keyValueValues=${{ secrets.KEY_VALUE_VALUES }}
+                    --parameters ./iac/main-deploy-aca.bicepparam keyValueNames=${{ secrets.KEY_VALUE_KEYS }} keyValueValues=${{ secrets.KEY_VALUE_VALUES }}
             
             - name: Azure CLI script
               uses: azure/CLI@v1
