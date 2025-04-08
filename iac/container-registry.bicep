@@ -55,3 +55,4 @@ resource AssignAcrPullToSlotResource 'Microsoft.Authorization/roleAssignments@20
 
 @description('Output the login server property for later use')
 output loginServer string = acrResource.properties.loginServer
+output registryName string = acrResource.name

@@ -4,7 +4,7 @@
 param location string = resourceGroup().location
 
 @minLength(5)
-@maxLength(50)
+@maxLength(25)
 @description('Provide a globally unique name of your Azure Container Registry')
 param acrName string = 'acr${uniqueString(resourceGroup().id)}'
 
@@ -13,13 +13,13 @@ param acrSku string = 'Basic'
 
 @maxLength(10)
 @minLength(2)
-@description('The prefix name of the app service to create.')
-param app_service_prefix string 
+@description('The product prefix name for all the services.')
+param productPrefix string 
 
 @maxLength(10)
 @minLength(2)
-@description('The postfix name of the app service to create.')
-param app_service_postfix string 
+@description('The region abbreviation.')
+param regionAbbrv string 
 
 @description('Specifies the name of the App Configuration store.')
 param configStoreName string = 'appconfig${uniqueString(resourceGroup().id)}'
@@ -51,14 +51,17 @@ param tagsArray array = [
 @description('The name of the container app environment.')
 param containerAppEnvName string = '<environment-name>'
 
+var fullAcrName = toLower('${productPrefix}${regionAbbrv}${acrName}')
+var fullAppConfigName = toLower('${productPrefix}-${regionAbbrv}-${configStoreName}')
+
 // =================================
 
 // Create Log Analytics workspace
 module logws './log-analytics-ws.bicep' = {
   name: 'LogWorkspaceDeployment'
   params: {
-    prefix: app_service_prefix
-    name: app_service_postfix
+    prefix: productPrefix
+    name: regionAbbrv
     location: location
   }
 }
@@ -67,7 +70,7 @@ module logws './log-analytics-ws.bicep' = {
 module acr 'container-registry.bicep' = {
   name: 'ContainerRegistryDeployment'
   params: {
-    acrName: acrName
+    acrName: fullAcrName
     location: location
     acrSku: acrSku
     // Pass principal IDs only if they are defined
@@ -91,7 +94,7 @@ module containerApp './container-app.bicep' = {
 module appConfig './app-configuration.bicep' = {
   name: 'AppConfigurationDeployment'
   params: {
-    configStoreName: configStoreName
+    configStoreName: fullAppConfigName
     location: location
     keyValueNames: keyValueNames
     keyValueValues: keyValueValues

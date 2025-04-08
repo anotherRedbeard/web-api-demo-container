@@ -28,6 +28,35 @@ env:
   app-config-name: 'red-eus2-academo-appconfig'
 
 jobs:
+  buildInfra:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout to the branch
+              uses: actions/checkout@v2
+
+            - name: Azure Login
+              uses: azure/login@v1
+              with:
+                creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+            - name: Create Resource Group, Deploy Bicep
+              uses: azure/CLI@v1
+              with:
+                inlineScript: |
+                    az group create -l ${{ env.LOCATION }} -n ${{ env.resource-group-name}}
+                    az deployment group create --resource-group ${{ env.resource-group-name }} \
+                    --name todo-webapi-aca \
+                    --parameters ./iac/main-deploy-aca.bicepparam keyValueNames=${{ secrets.KEY_VALUE_NAMES }} keyValueValues=${{ secrets.KEY_VALUE_VALUES }}
+            
+            - name: Azure CLI script
+              uses: azure/CLI@v1
+              with:
+                inlineScript: |
+                    az logout
+                    az cache purge
+                    az account clear
+
   build:
     runs-on: ubuntu-latest
 

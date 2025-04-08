@@ -1,24 +1,22 @@
 using './main-deploy-aca.bicep'
 
-param location = '<location>'
-param acrName = '<azure-container-registry-name>'
+param location = 'eastus2'
+param acrName = 'containerreg01'
 param acrSku = 'Basic'
-param app_service_prefix = '<prefix>'
-param app_service_postfix = '<postfix>'
-param configStoreName = '<app-configuration-name>'
-param keyValueNames = [
-  'keyName1$labelName'
-  'keyName2$labelName'
-]
-param keyValueValues = [
-  'key1Value'
-  'key2Value'
-]
+param productPrefix = 'red'
+param regionAbbrv = 'eus2'
+param configStoreName = 'academo-appconfig'
 param contentTypes = [
+  'string'
+  'string'
+  'string'
+  'string'
+  'string'
+  'string'
   'string'
   'string'
 ]
 param tagsArray = [
   {dev: 'dev'}
 ]
-param containerAppEnvName = '<container-app-env-name>'
+param containerAppEnvName = 'dev-env'
