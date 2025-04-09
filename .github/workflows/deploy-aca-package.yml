@@ -44,7 +44,7 @@ jobs:
               run: |
                   echo "Original KEY_VALUE_VALUES=${{ secrets.KEY_VALUE_VALUES }}"
                   # Re-quote the secrets to ensure they are valid JSON
-                  KEY_VALUE_VALUES=$(echo '${{ secrets.KEY_VALUE_VALUES }}' | jq -c )
+                  KEY_VALUE_VALUES=$(echo '${{ secrets.KEY_VALUE_VALUES }}' | jq -R 'split(",")' -c )
                   echo "Reformatted KEY_VALUE_VALUES=$KEY_VALUE_VALUES"
                   echo "KEY_VALUE_VALUES=$KEY_VALUE_VALUES" >> $GITHUB_ENV
 
@@ -55,7 +55,7 @@ jobs:
                     az group create -l ${{ env.location }} -n ${{ env.resource-group-name}}
                     az deployment group create --resource-group ${{ env.resource-group-name }} \
                     --name todo-webapi-aca \
-                    --parameters ./iac/main-deploy-aca.bicepparam keyValueNames="$KEY_VALUE_KEYS" keyValueValues='$(echo '${{ secrets.KEY_VALUE_VALUES }}' | jq -c )'
+                    --parameters ./iac/main-deploy-aca.bicepparam keyValueNames="${{secrets.KEY_VALUE_KEYS}}" keyValueValues='$KEY_VALUE_VALUES'
             
             - name: Azure CLI script
               uses: azure/CLI@v1
