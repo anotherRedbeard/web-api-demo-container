@@ -42,10 +42,14 @@ jobs:
 
             - name: Debug Key Value Values
               run: |
+                  echo "Original KEY_VALUE_KEYS=${{ secrets.KEY_VALUE_KEYS }}"
                   echo "Original KEY_VALUE_VALUES=${{ secrets.KEY_VALUE_VALUES }}"
                   # Re-quote the secrets to ensure they are valid JSON
+                  KEY_VALUE_KEYS=$(echo '${{ secrets.KEY_VALUE_KEYS }}' | jq -R 'split(",")' -c )
                   KEY_VALUE_VALUES=$(echo '${{ secrets.KEY_VALUE_VALUES }}' | jq -R 'split(",")' -c )
+                  echo "Reformatted KEY_VALUE_KEYS=$KEY_VALUE_KEYS"
                   echo "Reformatted KEY_VALUE_VALUES=$KEY_VALUE_VALUES"
+                  echo "KEY_VALUE_KEYS=$KEY_VALUE_KEYS" >> $GITHUB_ENV
                   echo "KEY_VALUE_VALUES=$KEY_VALUE_VALUES" >> $GITHUB_ENV
 
             - name: Create Resource Group, Deploy Bicep
@@ -55,7 +59,7 @@ jobs:
                     az group create -l ${{ env.location }} -n ${{ env.resource-group-name}}
                     az deployment group create --resource-group ${{ env.resource-group-name }} \
                     --name todo-webapi-aca \
-                    --parameters ./iac/main-deploy-aca.bicepparam keyValueNames="${{secrets.KEY_VALUE_KEYS}}" keyValueValues='$KEY_VALUE_VALUES'
+                    --parameters ./iac/main-deploy-aca.bicepparam keyValueNames="$KEY_VALUE_KEYS" keyValueValues='$KEY_VALUE_VALUES'
             
             - name: Azure CLI script
               uses: azure/CLI@v1
