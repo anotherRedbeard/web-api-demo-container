@@ -44,7 +44,7 @@ jobs:
               run: |
                   echo "Original KEY_VALUE_VALUES=${{ secrets.KEY_VALUE_VALUES }}"
                   # Re-quote the secrets to ensure they are valid JSON
-                  KEY_VALUE_VALUES=$(echo '${{ secrets.KEY_VALUE_VALUES }}' | jq -R 'split(",")')
+                  KEY_VALUE_VALUES=$(echo '${{ secrets.KEY_VALUE_VALUES }}' | jq )
                   echo "Reformatted KEY_VALUE_VALUES=$KEY_VALUE_VALUES"
                   echo "KEY_VALUE_VALUES=$KEY_VALUE_VALUES" >> $GITHUB_ENV
 
